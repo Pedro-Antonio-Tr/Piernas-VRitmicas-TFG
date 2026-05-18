@@ -95,21 +95,8 @@ public class ControladorMenu : MonoBehaviour
         audioSourceMenu = gameObject.AddComponent<AudioSource>();
         audioSourceMenu.playOnAwake = false;
         audioSourceMenu.ignoreListenerPause = true;
-        panelMenu.SetActive(true);
-        AbrirPanel(panelBienvenida);
-        if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(false);
-
-        if (GestorDatosUsuario.Instancia != null)
-        {
-            StartCoroutine(RutinaAplicarConfiguracionInicial());
-        }
-        else
-        {
-            ColocarMenuDelanteDeLaMirada();
-            ActualizarLaseres(true);
-            ActualizarBotonesModo();
-            ActualizarBotonesDificultad();
-        }
+        if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(true);
+        panelMenu.SetActive(false);
     }
 
     private System.Collections.IEnumerator RutinaAplicarConfiguracionInicial()
@@ -148,22 +135,58 @@ public class ControladorMenu : MonoBehaviour
 
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.One) ||
-            OVRInput.GetDown(OVRInput.Button.Three) ||
-            OVRInput.GetDown(OVRInput.Button.Start) ||
-            partidaTerminada)
+        if (OVRInput.GetDown(OVRInput.RawButton.X))
         {
-            partidaTerminada = false;
-            AlternarMenuGeneral();
-        }
-        if (OVRInput.GetDown(OVRInput.Button.Two) || OVRInput.GetDown(OVRInput.Button.Four))
-        {
-            CentrarVistaUsuario();
-            tiempoMirandoFuera = 0f;
-            cooldownAviso = 15f;
+            IniciarCalibracionPierna();
         }
         ColocarMenuDelanteDeLaMirada();
-        ComprobarAtencionJugador();
+    }
+
+    public void IniciarCalibracionPierna()
+    {
+        if (calibracionEnProceso) return;
+
+        // Abrimos el menú y apagamos el juego de fondo temporalmente
+        panelMenu.SetActive(true);
+        if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(false);
+
+        ColocarMenuDelanteDeLaMirada();
+        StartCoroutine(RutinaCalibrarPierna());
+    }
+
+    private System.Collections.IEnumerator RutinaCalibrarPierna()
+    {
+        calibracionEnProceso = true;
+        AbrirPanel(panelCuentaAtras);
+        ActualizarLaseres(false);
+
+        DetectorPiernaVR detector = DetectorPiernaVR.Instancia;
+
+        yield return FaseContador("1/5: MANTÉN LA PIERNA EN REPOSO", null);
+        detector.calibracion.reposo = detector.ObtenerDatosHardware();
+
+        yield return FaseContador("2/5: INCLINA LA PIERNA A LA IZQUIERDA", null);
+        detector.calibracion.izquierda = detector.ObtenerDatosHardware();
+
+        yield return FaseContador("3/5: INCLINA LA PIERNA A LA DERECHA", null);
+        detector.calibracion.derecha = detector.ObtenerDatosHardware();
+
+        yield return FaseContador("4/5: ESTIRA LA PIERNA (ABAJO)", null);
+        detector.calibracion.extendida = detector.ObtenerDatosHardware();
+
+        yield return FaseContador("5/5: LEVANTA LA RODILLA (ARRIBA)", null);
+        detector.calibracion.levantada = detector.ObtenerDatosHardware();
+
+        detector.ExportarCalibracionJSON();
+
+        textoInstrucciones.text = "¡CALIBRACIÓN GUARDADA!";
+        textoCuentaAtras.text = "JSON generado en PC";
+        yield return new WaitForSecondsRealtime(2f);
+
+        panelCuentaAtras.SetActive(false);
+        panelMenu.SetActive(false);
+        calibracionEnProceso = false;
+        if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(true);
     }
 
     public void ReproducirSonidoClic()
