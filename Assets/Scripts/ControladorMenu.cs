@@ -61,7 +61,7 @@ public class ControladorMenu : MonoBehaviour
     public GameObject pantallaCurva;
 
     private bool primeraVezAbierto = true;
-    private bool calibracionEnProceso = false;
+    public bool calibracionEnProceso = false;
     private bool partidaTerminada = false;
 
     [Header("Sliders de Distancia")]
@@ -89,6 +89,12 @@ public class ControladorMenu : MonoBehaviour
 
     [Header("Tamaño Base del Menú")]
     public Vector3 escalaBaseMenu = new Vector3(0.01f, 0.01f, 0.01f);
+
+
+    void Awake()
+    {
+        Instancia = this;
+    }
 
     void Start()
     {
@@ -177,10 +183,8 @@ public class ControladorMenu : MonoBehaviour
         yield return FaseContador("5/5: LEVANTA LA RODILLA (ARRIBA)", null);
         detector.calibracion.levantada = detector.ObtenerDatosHardware();
 
-        detector.ExportarCalibracionJSON();
-
         textoInstrucciones.text = "¡CALIBRACIÓN GUARDADA!";
-        textoCuentaAtras.text = "JSON generado en PC";
+        textoCuentaAtras.text = "La calibración ha finalizado";
         yield return new WaitForSecondsRealtime(2f);
 
         panelCuentaAtras.SetActive(false);
@@ -554,11 +558,6 @@ public class ControladorMenu : MonoBehaviour
 
         if (!panelMenu.activeSelf) AlternarMenuGeneral();
         else AbrirPanel(panelResultados);
-    }
-
-    public void CambiarCurvaturaPantalla()
-    {
-        // ... (Lógica de pantalla curva mantenida)
     }
 
     public void CambiarTamanoMenu(float nuevoTamano)

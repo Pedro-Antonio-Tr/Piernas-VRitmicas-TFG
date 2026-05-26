@@ -10089,10 +10089,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32efaf59be3a2524381470b7cc810279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorRitmo
+  prefabsNotas:
+  - {fileID: 5937777153924470825, guid: 34e220525ce57564793db812fbd1ed5d, type: 3}
+  - {fileID: 4936441264606553795, guid: fc4b6e8630629c24697fd2b7ad6edeb0, type: 3}
+  - {fileID: 8885650777287612863, guid: 8fcc3464853bdc948ba396684ee0f24d, type: 3}
+  - {fileID: 8523509832685433953, guid: a83a0ac01af3f2346a85ea6b37cbc694, type: 3}
+  - {fileID: 8523509832685433953, guid: 1529e408c7f00744e8c846d935739831, type: 3}
+  contenedorPista: {fileID: 1010962396}
+  zSpawn: 25
+  modoPruebaActivo: 0
   juegoEmpezado: 0
   enCuentaAtras: 0
-  pistaDeRitmo: {fileID: 1010962396}
-  headAnchor: {fileID: 2056752266}
 --- !u!1 &1731864596
 GameObject:
   m_ObjectHideFlags: 0

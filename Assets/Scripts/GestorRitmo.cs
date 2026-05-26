@@ -1,50 +1,124 @@
 using UnityEngine;
+using System.Collections;
 
 public class GestorRitmo : MonoBehaviour
 {
     public static GestorRitmo Instancia;
 
-    [Header("Estado del Juego")]
+    [Header("Prefabs de las Notas")]
+    public GameObject[] prefabsNotas;
+
+    [Header("Configuración de la Pista")]
+    public Transform contenedorPista;
+    public float zSpawn = 25f;
+
+    [Header("Estado")]
+    public bool modoPruebaActivo = false;
+
+    private Coroutine bucleNotas;
     public bool juegoEmpezado = false;
     public bool enCuentaAtras = false;
-
-    [Header("Referencias de Pista")]
-    public Transform pistaDeRitmo;
-    public Transform headAnchor;
 
     void Awake()
     {
         Instancia = this;
     }
 
-    public void EmpezarPartidaDesdeMenu()
+    void Update()
     {
-        CentrarPistaEnMirada();
-        juegoEmpezado = true;
+        if (OVRInput.GetDown(OVRInput.RawButton.Y))
+        {
+            if (ControladorMenu.Instancia != null && !ControladorMenu.Instancia.calibracionEnProceso)
+            {
+                ToggleModoPrueba();
+            }
+        }
     }
 
-    public void VolverAlMenuPrincipal()
+    private void ToggleModoPrueba()
     {
-        juegoEmpezado = false;
+        modoPruebaActivo = !modoPruebaActivo;
+
+        if (modoPruebaActivo)
+        {
+            Debug.Log("¡Modo Prueba de Ritmo INICIADO! Spawneando notas cada 2 segundos.");
+            bucleNotas = StartCoroutine(BucleGeneracionNotas());
+        }
+        else
+        {
+            Debug.Log("Modo Prueba de Ritmo FINALIZADO.");
+            if (bucleNotas != null) StopCoroutine(bucleNotas);
+
+            foreach (NotaRitmo notaRestante in FindObjectsByType<NotaRitmo>(FindObjectsSortMode.None))
+            {
+                Destroy(notaRestante.gameObject);
+            }
+        }
+    }
+
+    private IEnumerator BucleGeneracionNotas()
+    {
+        yield return new WaitForSeconds(1f);
+
+        while (modoPruebaActivo)
+        {
+            SpawnNotaAleatoria();
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    private void SpawnNotaAleatoria()
+    {
+        if (prefabsNotas == null || prefabsNotas.Length == 0 || contenedorPista == null) return;
+
+        int indiceAleatorio = Random.Range(0, prefabsNotas.Length);
+        GameObject prefabElegido = prefabsNotas[indiceAleatorio];
+
+        NotaRitmo datosNota = prefabElegido.GetComponent<NotaRitmo>();
+        if (datosNota == null) return;
+
+        Vector3 posicionLocalSpawn = new Vector3(0f, 0f, zSpawn);
+
+        switch (datosNota.tipoDeNota)
+        {
+            case NotaRitmo.TipoNota.Izquierda:
+                posicionLocalSpawn.x = -0.7f;
+                break;
+            case NotaRitmo.TipoNota.Derecha:
+                posicionLocalSpawn.x = 0.7f;
+                break;
+            case NotaRitmo.TipoNota.Arriba:
+                posicionLocalSpawn.y = 0.7f;
+                break;
+            case NotaRitmo.TipoNota.Abajo:
+                posicionLocalSpawn.y = -0.7f;
+                break;
+            case NotaRitmo.TipoNota.Reposo:
+                break;
+        }
+
+        GameObject nuevaNota = Instantiate(prefabElegido, contenedorPista);
+
+        nuevaNota.transform.localPosition = posicionLocalSpawn;
+    }
+
+    public void EmpezarPartidaDesdeMenu()
+    {
+        //placeholder para eliminar errores
     }
 
     public void ReiniciarNivelActual()
     {
-        VolverAlMenuPrincipal();
-        EmpezarPartidaDesdeMenu();
+        //placeholder para eliminar errores
     }
 
-    public void AlternarPausa(bool estaEnPausa)
+    public void VolverAlMenuPrincipal()
     {
-        if (estaEnPausa) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
+        //placeholder para eliminar errores
     }
 
-    private void CentrarPistaEnMirada()
+    public void AlternarPausa(bool pausa)
     {
-        if (headAnchor == null || pistaDeRitmo == null) return;
-
-        pistaDeRitmo.position = headAnchor.position;
-        pistaDeRitmo.rotation = headAnchor.rotation;
+        //placeholder para eliminar errores
     }
 }
