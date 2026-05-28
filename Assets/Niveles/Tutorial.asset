@@ -18,9 +18,157 @@ MonoBehaviour:
   offsetInicial: 1
   desfasesExtra: []
   notasFacil:
-  - tiempoAparicion: 11.333334
+  - tiempoAparicion: 11.666667
     tipoNota: 0
-  - tiempoAparicion: 12.666667
+  - tiempoAparicion: 14.333334
+    tipoNota: 0
+  - tiempoAparicion: 17
+    tipoNota: 0
+  - tiempoAparicion: 19.666668
+    tipoNota: 0
+  - tiempoAparicion: 22.333334
+    tipoNota: 2
+  - tiempoAparicion: 25
+    tipoNota: 2
+  - tiempoAparicion: 27.666668
+    tipoNota: 2
+  - tiempoAparicion: 30.333334
+    tipoNota: 2
+  - tiempoAparicion: 33
+    tipoNota: 1
+  - tiempoAparicion: 35.666668
+    tipoNota: 1
+  - tiempoAparicion: 38.333336
+    tipoNota: 1
+  - tiempoAparicion: 41
+    tipoNota: 1
+  - tiempoAparicion: 43.666668
+    tipoNota: 4
+  - tiempoAparicion: 46.333336
+    tipoNota: 4
+  - tiempoAparicion: 49
+    tipoNota: 4
+  - tiempoAparicion: 51.666668
+    tipoNota: 4
+  - tiempoAparicion: 54.333336
+    tipoNota: 3
+  - tiempoAparicion: 57
+    tipoNota: 3
+  - tiempoAparicion: 59.666668
+    tipoNota: 3
+  - tiempoAparicion: 62.333336
+    tipoNota: 3
+  - tiempoAparicion: 64.333336
+    tipoNota: 0
+  - tiempoAparicion: 67
+    tipoNota: 2
+  - tiempoAparicion: 69.66667
+    tipoNota: 1
+  - tiempoAparicion: 72.333336
+    tipoNota: 4
+  - tiempoAparicion: 75
+    tipoNota: 3
+  - tiempoAparicion: 77.66667
+    tipoNota: 1
+  - tiempoAparicion: 80.333336
+    tipoNota: 2
+  - tiempoAparicion: 82.333336
+    tipoNota: 0
+  - tiempoAparicion: 85.66667
+    tipoNota: 3
+  - tiempoAparicion: 87
+    tipoNota: 4
+  - tiempoAparicion: 91
+    tipoNota: 0
+  - tiempoAparicion: 92.333336
+    tipoNota: 1
+  - tiempoAparicion: 93.66667
+    tipoNota: 2
+  - tiempoAparicion: 95
+    tipoNota: 1
+  - tiempoAparicion: 96.333336
+    tipoNota: 3
+  - tiempoAparicion: 97.66667
+    tipoNota: 4
+  - tiempoAparicion: 99
+    tipoNota: 2
+  - tiempoAparicion: 100.333336
+    tipoNota: 1
+  - tiempoAparicion: 101.66667
+    tipoNota: 0
+  - tiempoAparicion: 103
+    tipoNota: 2
+  - tiempoAparicion: 104.333336
+    tipoNota: 1
+  - tiempoAparicion: 105.66667
+    tipoNota: 3
+  - tiempoAparicion: 107
+    tipoNota: 4
+  - tiempoAparicion: 108.333336
+    tipoNota: 0
+  - tiempoAparicion: 109.66667
+    tipoNota: 0
+  - tiempoAparicion: 111
+    tipoNota: 1
+  - tiempoAparicion: 112.333336
+    tipoNota: 2
+  - tiempoAparicion: 113.66667
+    tipoNota: 3
+  - tiempoAparicion: 115
+    tipoNota: 4
+  - tiempoAparicion: 116.333336
+    tipoNota: 0
+  - tiempoAparicion: 119.66667
+    tipoNota: 0
+  - tiempoAparicion: 121
+    tipoNota: 3
+  - tiempoAparicion: 122.333336
+    tipoNota: 3
+  - tiempoAparicion: 123.66667
+    tipoNota: 0
+  - tiempoAparicion: 125
+    tipoNota: 0
+  - tiempoAparicion: 126.333336
+    tipoNota: 4
+  - tiempoAparicion: 127.66667
+    tipoNota: 4
+  - tiempoAparicion: 129
+    tipoNota: 1
+  - tiempoAparicion: 130.33334
+    tipoNota: 1
+  - tiempoAparicion: 131.66667
+    tipoNota: 2
+  - tiempoAparicion: 133
+    tipoNota: 2
+  - tiempoAparicion: 134.33334
+    tipoNota: 0
+  - tiempoAparicion: 135.66667
+    tipoNota: 1
+  - tiempoAparicion: 137
+    tipoNota: 2
+  - tiempoAparicion: 138.33334
+    tipoNota: 3
+  - tiempoAparicion: 139.66667
+    tipoNota: 4
+  - tiempoAparicion: 141
+    tipoNota: 0
+  - tiempoAparicion: 142.33334
+    tipoNota: 0
+  - tiempoAparicion: 143.66667
+    tipoNota: 1
+  - tiempoAparicion: 145
+    tipoNota: 2
+  - tiempoAparicion: 146.33334
+    tipoNota: 3
+  - tiempoAparicion: 147.66667
+    tipoNota: 4
+  - tiempoAparicion: 149
+    tipoNota: 2
+  - tiempoAparicion: 150.33334
+    tipoNota: 1
+  - tiempoAparicion: 151.66667
+    tipoNota: 0
+  - tiempoAparicion: 157.66667
     tipoNota: 0
   notasNormal: []
   notasDificil: []

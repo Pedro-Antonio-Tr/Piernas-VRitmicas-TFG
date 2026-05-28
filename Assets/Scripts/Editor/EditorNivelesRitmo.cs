@@ -20,16 +20,41 @@ public class EditorNivelesRitmo : EditorWindow
         GetWindow<EditorNivelesRitmo>("Editor de Ritmo");
     }
 
-    void OnEnable()
+    private AudioSource ObtenerReproductor()
     {
-        GameObject obj = new GameObject("ReproductorEditorRitmo");
-        obj.hideFlags = HideFlags.HideAndDontSave;
-        reproductor = obj.AddComponent<AudioSource>();
+        if (reproductor == null)
+        {
+            GameObject obj = GameObject.Find("ReproductorEditorRitmo_Temp");
+            if (obj == null)
+            {
+                obj = new GameObject("ReproductorEditorRitmo_Temp");
+                obj.hideFlags = HideFlags.HideAndDontSave;
+                reproductor = obj.AddComponent<AudioSource>();
+            }
+            else
+            {
+                reproductor = obj.GetComponent<AudioSource>();
+            }
+        }
+        return reproductor;
     }
 
     void OnDisable()
     {
+        if (estaGrabando)
+        {
+            Debug.LogWarning("Se interrumpió el editor. Forzando guardado de seguridad...");
+            DetenerGrabacion(ObtenerReproductor());
+        }
         if (reproductor != null) DestroyImmediate(reproductor.gameObject);
+    }
+
+    void Update()
+    {
+        if (Application.isPlaying && ObtenerReproductor().isPlaying)
+        {
+            Repaint();
+        }
     }
 
     void OnGUI()
@@ -45,11 +70,15 @@ public class EditorNivelesRitmo : EditorWindow
             return;
         }
 
+        if (!Application.isPlaying)
+        {
+            EditorGUILayout.HelpBox("¡ATENCIÓN! Debes entrar en el MODO PLAY (▶️) para grabar sin lag de audio.", MessageType.Error);
+        }
+
         EditorGUILayout.Space();
         GUILayout.Label("Sintonización Fina (Ajuste en Vivo)", EditorStyles.boldLabel);
 
         EditorGUI.BeginChangeCheck();
-
         float nuevoBPM = EditorGUILayout.FloatField("BPM de la Canción", cancionActual.bpm);
         float nuevoOffset = EditorGUILayout.FloatField("Offset Inicial (segs)", cancionActual.offsetInicial);
 
@@ -87,41 +116,42 @@ public class EditorNivelesRitmo : EditorWindow
         }
         GUILayout.EndHorizontal();
 
-        if (reproductor != null && reproductor.isPlaying && cancionActual.bpm > 0)
+        AudioSource player = ObtenerReproductor();
+        if (player.isPlaying && cancionActual.bpm > 0)
         {
-            DibujarMetronomoVisual();
+            DibujarMetronomoVisual(player);
         }
 
         EditorGUILayout.Space();
-        if (reproductor.clip != cancionActual.archivoAudio) reproductor.clip = cancionActual.archivoAudio;
+        if (player.clip != cancionActual.archivoAudio) player.clip = cancionActual.archivoAudio;
 
+        EditorGUI.BeginDisabledGroup(!Application.isPlaying);
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button(estaGrabando ? "⏹ DETENER" : "▶ REPRODUCIR Y GRABAR", GUILayout.Height(40)))
+        if (GUILayout.Button(estaGrabando ? "⏹ DETENER Y GUARDAR" : "▶ REPRODUCIR Y GRABAR", GUILayout.Height(40)))
         {
-            if (estaGrabando) DetenerGrabacion();
-            else IniciarGrabacion();
+            if (estaGrabando) DetenerGrabacion(player);
+            else IniciarGrabacion(player);
         }
-        if (GUILayout.Button(reproductor.isPlaying && !estaGrabando ? "⏹ PARAR TEST" : "👁 TESTEAR METRÓNOMO", GUILayout.Height(40)))
+        if (GUILayout.Button(player.isPlaying && !estaGrabando ? "⏹ PARAR TEST" : "👁 TESTEAR METRÓNOMO", GUILayout.Height(40)))
         {
-            if (reproductor.isPlaying) reproductor.Stop();
-            else reproductor.Play();
+            if (player.isPlaying) player.Stop();
+            else player.Play();
         }
         GUILayout.EndHorizontal();
+        EditorGUI.EndDisabledGroup();
 
-        if (reproductor.isPlaying)
+        if (player.isPlaying)
         {
-            Repaint();
-
             if (estaGrabando)
             {
                 EditorGUILayout.HelpBox("¡GRABANDO! Usa las flechas del teclado y la tecla Espacio para añadir notas.", MessageType.Warning);
-                RegistrarTeclasEnTiempoReal();
+                RegistrarTeclasEnTiempoReal(player);
             }
 
             Rect r = EditorGUILayout.GetControlRect(false, 20);
-            EditorGUI.ProgressBar(r, reproductor.time / reproductor.clip.length, $"Tiempo: {reproductor.time:F2}s");
+            EditorGUI.ProgressBar(r, player.time / player.clip.length, $"Tiempo: {player.time:F2}s");
 
-            if (!reproductor.isPlaying && estaGrabando) DetenerGrabacion();
+            if (!player.isPlaying && estaGrabando) DetenerGrabacion(player);
         }
 
         EditorGUILayout.Space();
@@ -131,6 +161,7 @@ public class EditorNivelesRitmo : EditorWindow
             {
                 listaActual.Clear();
                 EditorUtility.SetDirty(cancionActual);
+                AssetDatabase.SaveAssets();
             }
         }
     }
@@ -158,19 +189,19 @@ public class EditorNivelesRitmo : EditorWindow
         return Mathf.Max(0, tiempoCuantizado);
     }
 
-    private void DibujarMetronomoVisual()
+    private void DibujarMetronomoVisual(AudioSource player)
     {
         float offsetActivo = cancionActual.offsetInicial;
         if (cancionActual.desfasesExtra != null)
         {
             foreach (var desfase in cancionActual.desfasesExtra)
             {
-                if (reproductor.time >= desfase.tiempoCancion) offsetActivo = desfase.nuevoOffset;
+                if (player.time >= desfase.tiempoCancion) offsetActivo = desfase.nuevoOffset;
             }
         }
 
         float segundosPorBeat = 60f / cancionActual.bpm;
-        float beatsPasados = (reproductor.time - offsetActivo) / segundosPorBeat;
+        float beatsPasados = (player.time - offsetActivo) / segundosPorBeat;
         float distanciaAlBeatExacto = Mathf.Abs(beatsPasados - Mathf.Round(beatsPasados));
 
         Color colorBPM = (distanciaAlBeatExacto < 0.15f) ? Color.green : new Color(0.3f, 0.3f, 0.3f);
@@ -188,27 +219,34 @@ public class EditorNivelesRitmo : EditorWindow
         GUI.backgroundColor = Color.white;
     }
 
-    private void IniciarGrabacion()
+    private void IniciarGrabacion(AudioSource player)
     {
         if (cancionActual.archivoAudio == null) return;
         estaGrabando = true;
-        reproductor.Play();
+        player.Play();
     }
 
-    private void DetenerGrabacion()
+    private void DetenerGrabacion(AudioSource player)
     {
         estaGrabando = false;
-        reproductor.Stop();
+        if (player != null) player.Stop();
 
         List<DatosCancionRitmo.NotaGuardada> lista = ObtenerListaActual();
-        lista = lista.GroupBy(n => n.tiempoAparicion).Select(g => g.First()).ToList();
-        lista = lista.OrderBy(n => n.tiempoAparicion).ToList();
+
+        var listaLimpia = lista.GroupBy(n => n.tiempoAparicion).Select(g => g.First()).ToList();
+        listaLimpia = listaLimpia.OrderBy(n => n.tiempoAparicion).ToList();
+
+        if (dificultadAEditar == MonitorClinico.NivelDificultad.Facil) cancionActual.notasFacil = listaLimpia;
+        else if (dificultadAEditar == MonitorClinico.NivelDificultad.Normal) cancionActual.notasNormal = listaLimpia;
+        else if (dificultadAEditar == MonitorClinico.NivelDificultad.Dificil) cancionActual.notasDificil = listaLimpia;
 
         EditorUtility.SetDirty(cancionActual);
         AssetDatabase.SaveAssets();
+
+        Debug.Log("<color=cyan>[Editor Ritmo]</color> Notas ordenadas y guardadas permanentemente en el disco.");
     }
 
-    private void RegistrarTeclasEnTiempoReal()
+    private void RegistrarTeclasEnTiempoReal(AudioSource player)
     {
         Event e = Event.current;
         if (e.type == EventType.KeyDown)
@@ -223,7 +261,7 @@ public class EditorNivelesRitmo : EditorWindow
 
             if (notaDetectada != null)
             {
-                float tiempoFinal = AcoplarAlRitmo(reproductor.time);
+                float tiempoFinal = AcoplarAlRitmo(player.time);
 
                 ObtenerListaActual().Add(new DatosCancionRitmo.NotaGuardada
                 {
@@ -231,7 +269,9 @@ public class EditorNivelesRitmo : EditorWindow
                     tipoNota = notaDetectada.Value
                 });
 
-                Debug.Log($"Nota guardada: Tocado en {reproductor.time:F2}s -> Acoplado a {tiempoFinal:F2}s");
+                EditorUtility.SetDirty(cancionActual);
+
+                Debug.Log($"Nota guardada: Acoplada a {tiempoFinal:F2}s");
                 e.Use();
             }
         }
@@ -256,5 +296,6 @@ public class EditorNivelesRitmo : EditorWindow
         }
 
         EditorUtility.SetDirty(cancionActual);
+        AssetDatabase.SaveAssets();
     }
 }

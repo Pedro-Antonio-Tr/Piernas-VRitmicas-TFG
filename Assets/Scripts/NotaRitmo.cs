@@ -20,7 +20,7 @@ public class NotaRitmo : MonoBehaviour
 
     void Update()
     {
-        if (GestorRitmo.Instancia == null || !GestorRitmo.Instancia.modoPruebaActivo) return;
+        if (GestorRitmo.Instancia == null || !GestorRitmo.Instancia.juegoEmpezado || GestorRitmo.Instancia.enCuentaAtras ) return;
 
         GestorRitmo motor = GestorRitmo.Instancia;
         float zActual = transform.localPosition.z;

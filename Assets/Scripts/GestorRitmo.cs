@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
@@ -10,6 +11,11 @@ public class GestorRitmo : MonoBehaviour
     [Header("Tracking del Jugador")]
     public Transform headAnchor;
 
+    [Header("Archivos de Canción")]
+    [Tooltip("El archivo creado con tu herramienta para el Tutorial")]
+    public DatosCancionRitmo cancionTutorial;
+    private AudioSource reproductorMusica;
+
     [Header("Prefabs de las Notas")]
     public GameObject[] prefabsNotas;
 
@@ -17,12 +23,19 @@ public class GestorRitmo : MonoBehaviour
     public Transform contenedorPista;
     public float zSpawn = 25f;
     public float distanciaPista = 1.0f;
-    [Tooltip("Altura base si el jugador mira recto o hacia abajo")]
     public float alturaPista = 1.0f;
-    [Tooltip("Límite mínimo en el eje Y para que el Canvas y la pista no atraviesen el suelo físico")]
     public float alturaMinimaSuelo = 0.3f;
-    [Tooltip("Cuánto hay que mirar hacia arriba (0.0 a 1.0) para que la pista empiece a inclinarse")]
     public float umbralMirarArriba = 0.15f;
+
+    [Header("UI Puntuación y Vida")]
+    public TextMeshProUGUI textoPuntuacion;
+    public TextMeshProUGUI textoMultiplicador;
+    public TextMeshProUGUI textoRacha;
+    public Slider barraVida;
+    public Slider barraMultiplicador;
+    public Image rellenoBarraVida;
+    [Tooltip("El texto 3D grande que flota en medio de la pista para la cuenta atrás")]
+    public TextMeshProUGUI textoCuentaAtrasPista;
 
     [Header("Movimiento y Escala")]
     public float velocidadBase = 4f;
@@ -30,7 +43,7 @@ public class GestorRitmo : MonoBehaviour
     public float zTransicion = 7f;
     public float escalaMinima = 0.1f;
 
-    [Header("Ajustes de Puntuación y Racha")]
+    [Header("Ajustes de Puntuación")]
     public int puntosPerfecto = 100;
     public int puntosMedio = 50;
     public int notasParaSubirMultiplicador = 4;
@@ -40,104 +53,217 @@ public class GestorRitmo : MonoBehaviour
     [Header("Ajustes de Vida")]
     public float vidaMax = 100f;
     public float vidaInicial = 50f;
-    public float vidaGanaPerfecto = 5f;
-    public float vidaGanaMedio = 2f;
     public float vidaPierdeFallo = 10f;
     public Color colorVidaNormal = Color.green;
     public Color colorVidaMuerte = Color.red;
-
-    [Header("UI Puntuación y Vida")]
-    public TextMeshProUGUI textoPuntuacion;
-    public TextMeshProUGUI textoMultiplicador;
-    public TextMeshProUGUI textoRacha;
-    public Slider barraVida;
-    public Slider barraMultiplicador;
-    public Image rellenoBarraVida;
-
-    [Header("Feedback Visual en Zonas")]
-    public Color colorAcierto = Color.green;
-    public Color colorMedio = Color.yellow;
     public Color colorFallo = Color.red;
+
+    [Header("Feedback Visual")]
     public PruebaDeteccionRitmo zonaIzquierda;
     public PruebaDeteccionRitmo zonaDerecha;
     public PruebaDeteccionRitmo zonaArriba;
     public PruebaDeteccionRitmo zonaAbajo;
     public PruebaDeteccionRitmo zonaReposo;
-
-    [Header("Sistema Volumétrico (Foco de Fondo)")]
     public Light luzFondo;
-    public float intensidadMaximaLuz = 8f;
-    public float velocidadDesvanecimientoLuz = 5f;
 
     [Header("Estado")]
-    public bool modoPruebaActivo = false;
     public bool juegoEmpezado = false;
     public bool enCuentaAtras = false;
+    private bool esModoTutorial = false;
 
-    private Coroutine bucleNotas;
-    private float intensidadObjetivoLuz = 0f;
+    private Coroutine bucleJuego;
     private int puntuacionTotal = 0;
     private int rachaActual = 0;
+    private int rachaMaxima = 0;
     private int indiceMultiplicadorActual = 0;
     private int progresoMultiplicador = 0;
     private float vidaActual;
+    private float intensidadObjetivoLuz = 0f;
 
     void Awake()
     {
         Instancia = this;
+        reproductorMusica = gameObject.AddComponent<AudioSource>();
+        if (textoCuentaAtrasPista != null) textoCuentaAtrasPista.gameObject.SetActive(false);
     }
 
     void Start()
     {
         if (luzFondo != null) { luzFondo.intensity = 0f; luzFondo.shadows = LightShadows.None; }
-        InicializarEstadisticas();
     }
 
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.Y))
-        {
-            if (ControladorMenu.Instancia != null && !ControladorMenu.Instancia.calibracionEnProceso)
-            {
-                ToggleModoPrueba();
-            }
-        }
-
         if (luzFondo != null)
         {
-            luzFondo.intensity = Mathf.MoveTowards(luzFondo.intensity, intensidadObjetivoLuz, velocidadDesvanecimientoLuz * Time.deltaTime);
+            luzFondo.intensity = Mathf.MoveTowards(luzFondo.intensity, intensidadObjetivoLuz, 5f * Time.deltaTime);
             if (luzFondo.intensity == intensidadObjetivoLuz) intensidadObjetivoLuz = 0f;
         }
-    }
 
-    private void ToggleModoPrueba()
-    {
-        modoPruebaActivo = !modoPruebaActivo;
-
-        if (modoPruebaActivo)
+        if (juegoEmpezado && esModoTutorial && !reproductorMusica.isPlaying && !enCuentaAtras && Time.timeScale > 0)
         {
-            CentrarPista();
-            InicializarEstadisticas();
-            bucleNotas = StartCoroutine(BucleGeneracionNotas());
-        }
-        else
-        {
-            DetenerPrueba();
+            StartCoroutine(VictoriaTutorial());
         }
     }
 
-    private void DetenerPrueba()
+    public void EmpezarPruebaAleatoria()
     {
-        modoPruebaActivo = false;
-        if (bucleNotas != null) StopCoroutine(bucleNotas);
+        esModoTutorial = false;
+        IniciarPartidaComun();
+    }
+
+    public void EmpezarTutorial()
+    {
+        if (cancionTutorial == null)
+        {
+            Debug.LogError("¡No has asignado el archivo DatosCancionRitmo en el Gestor!");
+            return;
+        }
+        esModoTutorial = true;
+        reproductorMusica.clip = cancionTutorial.archivoAudio;
+        IniciarPartidaComun();
+    }
+
+    private void IniciarPartidaComun()
+    {
+        CentrarPista();
+        InicializarEstadisticas();
+        LimpiarPista();
+        juegoEmpezado = true;
+        ReanudarJuegoConCuentaAtras();
+    }
+
+    public void PausarJuego()
+    {
+        Time.timeScale = 0f;
+        if (reproductorMusica.isPlaying) reproductorMusica.Pause();
+    }
+
+    public void ReanudarJuegoConCuentaAtras()
+    {
+        StartCoroutine(RutinaCuentaAtras());
+    }
+
+    public void ReiniciarNivelActual()
+    {
+        DetenerTodo();
+        if (esModoTutorial) EmpezarTutorial();
+        else EmpezarPruebaAleatoria();
+    }
+
+    public void DetenerTodo()
+    {
+        juegoEmpezado = false;
+        Time.timeScale = 1f;
+        if (bucleJuego != null) StopCoroutine(bucleJuego);
+        reproductorMusica.Stop();
+        LimpiarPista();
+    }
+
+    private void LimpiarPista()
+    {
         foreach (NotaRitmo nota in FindObjectsOfType<NotaRitmo>()) Destroy(nota.gameObject);
         if (luzFondo != null) luzFondo.intensity = 0f;
     }
+
+    private IEnumerator RutinaCuentaAtras()
+    {
+        enCuentaAtras = true;
+        if (textoCuentaAtrasPista != null)
+        {
+            textoCuentaAtrasPista.gameObject.SetActive(true);
+            for (int i = 3; i > 0; i--)
+            {
+                textoCuentaAtrasPista.text = i.ToString();
+                yield return new WaitForSecondsRealtime(1f);
+            }
+            textoCuentaAtrasPista.text = "¡YA!";
+            yield return new WaitForSecondsRealtime(0.3f);
+            textoCuentaAtrasPista.gameObject.SetActive(false);
+        }
+
+        enCuentaAtras = false;
+        Time.timeScale = 1f;
+
+        if (esModoTutorial)
+        {
+            reproductorMusica.Play();
+            bucleJuego = StartCoroutine(BucleLectorTutorial());
+        }
+        else
+        {
+            bucleJuego = StartCoroutine(BucleGeneradorAleatorio());
+        }
+    }
+
+    private IEnumerator BucleGeneradorAleatorio()
+    {
+        while (juegoEmpezado)
+        {
+            InstanciarNotaFisica(ObtenerNotaAleatoria());
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    private IEnumerator BucleLectorTutorial()
+    {
+        List<DatosCancionRitmo.NotaGuardada> notas = cancionTutorial.notasFacil;
+        int indiceNota = 0;
+
+        while (juegoEmpezado && indiceNota < notas.Count)
+        {
+            float tiempoViaje = (zSpawn - zTransicion) / velocidadAcercamiento + (zTransicion - 2f) / velocidadBase;
+            float tiempoNacimiento = notas[indiceNota].tiempoAparicion - tiempoViaje;
+
+            if (reproductorMusica.time >= tiempoNacimiento)
+            {
+                InstanciarNotaFisica(notas[indiceNota].tipoNota);
+                indiceNota++;
+            }
+            yield return null;
+        }
+    }
+
+    private void InstanciarNotaFisica(NotaRitmo.TipoNota tipo)
+    {
+        if (prefabsNotas == null || prefabsNotas.Length == 0) return;
+
+        GameObject prefabElegido = null;
+        foreach (GameObject p in prefabsNotas)
+        {
+            if (p.GetComponent<NotaRitmo>().tipoDeNota == tipo)
+            {
+                prefabElegido = p;
+                break;
+            }
+        }
+        if (prefabElegido == null) return;
+
+        Vector3 posicionLocalSpawn = new Vector3(0f, 0f, zSpawn);
+        switch (tipo)
+        {
+            case NotaRitmo.TipoNota.Izquierda: posicionLocalSpawn.x = -0.7f; break;
+            case NotaRitmo.TipoNota.Derecha: posicionLocalSpawn.x = 0.7f; break;
+            case NotaRitmo.TipoNota.Arriba: posicionLocalSpawn.y = 0.7f; break;
+            case NotaRitmo.TipoNota.Abajo: posicionLocalSpawn.y = -0.7f; break;
+            case NotaRitmo.TipoNota.Reposo: break;
+        }
+
+        GameObject nuevaNota = Instantiate(prefabElegido, contenedorPista);
+        nuevaNota.transform.localPosition = posicionLocalSpawn;
+    }
+
+    private NotaRitmo.TipoNota ObtenerNotaAleatoria()
+    {
+        return (NotaRitmo.TipoNota)Random.Range(0, 5);
+    }
+
 
     private void InicializarEstadisticas()
     {
         puntuacionTotal = 0;
         rachaActual = 0;
+        rachaMaxima = 0;
         indiceMultiplicadorActual = 0;
         progresoMultiplicador = 0;
         vidaActual = vidaInicial;
@@ -148,20 +274,22 @@ public class GestorRitmo : MonoBehaviour
 
     public void ProcesarNota(NotaRitmo.TipoNota tipo, int calidad)
     {
-        if (!modoPruebaActivo) return;
+        if (!juegoEmpezado) return;
 
         Color colorDestello = colorFallo;
 
         if (calidad > 0)
         {
             rachaActual++;
+            if (rachaActual > rachaMaxima) rachaMaxima = rachaActual;
+
             int multi = nivelesMultiplicador[indiceMultiplicadorActual];
 
             if (calidad == 2)
             {
                 puntuacionTotal += puntosPerfecto * multi;
-                vidaActual = Mathf.Clamp(vidaActual + vidaGanaPerfecto, 0, vidaMax);
-                colorDestello = colorAcierto;
+                vidaActual = Mathf.Clamp(vidaActual + 5f, 0, vidaMax);
+                colorDestello = Color.green;
 
                 if (indiceMultiplicadorActual < nivelesMultiplicador.Length - 1)
                 {
@@ -176,8 +304,8 @@ public class GestorRitmo : MonoBehaviour
             else
             {
                 puntuacionTotal += puntosMedio * multi;
-                vidaActual = Mathf.Clamp(vidaActual + vidaGanaMedio, 0, vidaMax);
-                colorDestello = colorMedio;
+                vidaActual = Mathf.Clamp(vidaActual + 2f, 0, vidaMax);
+                colorDestello = Color.yellow;
             }
         }
         else
@@ -187,15 +315,12 @@ public class GestorRitmo : MonoBehaviour
             vidaActual -= vidaPierdeFallo;
             colorDestello = colorFallo;
 
-            if (bajarSoloUnNivelAlFallar)
-                indiceMultiplicadorActual = Mathf.Max(0, indiceMultiplicadorActual - 1);
-            else
-                indiceMultiplicadorActual = 0;
+            indiceMultiplicadorActual = bajarSoloUnNivelAlFallar ? Mathf.Max(0, indiceMultiplicadorActual - 1) : 0;
 
             if (vidaActual <= 0)
             {
                 vidaActual = 0;
-                MuertePorVida();
+                DerrotaPorVida();
             }
         }
 
@@ -207,26 +332,28 @@ public class GestorRitmo : MonoBehaviour
     {
         if (textoPuntuacion != null) textoPuntuacion.text = puntuacionTotal.ToString("N0");
         if (textoRacha != null) textoRacha.text = rachaActual + " Combo";
-
-        if (textoMultiplicador != null)
-            textoMultiplicador.text = "x" + nivelesMultiplicador[indiceMultiplicadorActual];
-
+        if (textoMultiplicador != null) textoMultiplicador.text = "x" + nivelesMultiplicador[indiceMultiplicadorActual];
         if (barraVida != null) barraVida.value = vidaActual / vidaMax;
 
         if (barraMultiplicador != null)
         {
-            if (indiceMultiplicadorActual == nivelesMultiplicador.Length - 1)
-                barraMultiplicador.value = 1f;
-            else
-                barraMultiplicador.value = (float)progresoMultiplicador / notasParaSubirMultiplicador;
+            if (indiceMultiplicadorActual == nivelesMultiplicador.Length - 1) barraMultiplicador.value = 1f;
+            else barraMultiplicador.value = (float)progresoMultiplicador / notasParaSubirMultiplicador;
         }
     }
 
-    private void MuertePorVida()
+    private void DerrotaPorVida()
     {
-        Debug.Log("<color=red>¡VIDA AGOTADA! Fin de la prueba.</color>");
         if (rellenoBarraVida != null) rellenoBarraVida.color = colorVidaMuerte;
-        DetenerPrueba();
+        DetenerTodo();
+        ControladorMenu.Instancia.MostrarResultadosFinales(false, puntuacionTotal, rachaMaxima);
+    }
+
+    private IEnumerator VictoriaTutorial()
+    {
+        yield return new WaitForSeconds(2f);
+        DetenerTodo();
+        ControladorMenu.Instancia.MostrarResultadosFinales(true, puntuacionTotal, rachaMaxima);
     }
 
     public void DispararFeedbackZona(NotaRitmo.TipoNota tipo, Color colorFlash)
@@ -243,12 +370,12 @@ public class GestorRitmo : MonoBehaviour
         if (luzFondo != null)
         {
             luzFondo.color = colorFlash;
-            luzFondo.intensity = intensidadMaximaLuz;
+            luzFondo.intensity = 8f;
             intensidadObjetivoLuz = 0f;
         }
     }
 
-    private void CentrarPista()
+    public void CentrarPista()
     {
         if (headAnchor == null || contenedorPista == null) return;
 
@@ -261,9 +388,7 @@ public class GestorRitmo : MonoBehaviour
             if (lookDirection == Vector3.zero) lookDirection = Vector3.forward;
 
             Vector3 posPista = headPos + (lookDirection * distanciaPista);
-            posPista.y = alturaPista;
-
-            posPista.y = Mathf.Max(posPista.y, alturaMinimaSuelo);
+            posPista.y = Mathf.Max(alturaPista, alturaMinimaSuelo);
 
             contenedorPista.position = posPista;
             contenedorPista.rotation = Quaternion.LookRotation(lookDirection);
@@ -271,50 +396,10 @@ public class GestorRitmo : MonoBehaviour
         else
         {
             Vector3 posPista = headPos + (lookDirection * distanciaPista);
-
             posPista.y = Mathf.Max(posPista.y, alturaMinimaSuelo);
 
             contenedorPista.position = posPista;
-
             contenedorPista.rotation = Quaternion.LookRotation(lookDirection);
         }
     }
-
-    private IEnumerator BucleGeneracionNotas()
-    {
-        yield return new WaitForSeconds(1f);
-        while (modoPruebaActivo)
-        {
-            SpawnNotaAleatoria();
-            yield return new WaitForSeconds(2f);
-        }
-    }
-
-    private void SpawnNotaAleatoria()
-    {
-        if (prefabsNotas == null || prefabsNotas.Length == 0 || contenedorPista == null) return;
-        int indiceAleatorio = Random.Range(0, prefabsNotas.Length);
-        GameObject prefabElegido = prefabsNotas[indiceAleatorio];
-
-        NotaRitmo datosNota = prefabElegido.GetComponent<NotaRitmo>();
-        if (datosNota == null) return;
-
-        Vector3 posicionLocalSpawn = new Vector3(0f, 0f, zSpawn);
-        switch (datosNota.tipoDeNota)
-        {
-            case NotaRitmo.TipoNota.Izquierda: posicionLocalSpawn.x = -0.7f; break;
-            case NotaRitmo.TipoNota.Derecha: posicionLocalSpawn.x = 0.7f; break;
-            case NotaRitmo.TipoNota.Arriba: posicionLocalSpawn.y = 0.7f; break;
-            case NotaRitmo.TipoNota.Abajo: posicionLocalSpawn.y = -0.7f; break;
-            case NotaRitmo.TipoNota.Reposo: break;
-        }
-
-        GameObject nuevaNota = Instantiate(prefabElegido, contenedorPista);
-        nuevaNota.transform.localPosition = posicionLocalSpawn;
-    }
-
-    public void EmpezarPartidaDesdeMenu() { }
-    public void ReiniciarNivelActual() { }
-    public void VolverAlMenuPrincipal() { }
-    public void AlternarPausa(bool pausa) { }
 }
