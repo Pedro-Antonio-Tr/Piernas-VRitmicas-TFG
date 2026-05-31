@@ -12,6 +12,26 @@ public class ControladorMenu : MonoBehaviour
     public Transform contenedorJuego;
     public float distanciaPantalla = 3.5f;
 
+    [Header("Catálogo de Niveles")]
+    public DatosCancionRitmo[] catalogoCanciones;
+    private int indiceCancionActual = 0;
+    private AudioSource audioPreviewNivel;
+
+    [Header("UI Selección de Niveles")]
+    public TextMeshProUGUI textoNivelNombre;
+    public TextMeshProUGUI textoNivelArtista;
+    public TextMeshProUGUI textoNivelDuracion;
+    public TextMeshProUGUI textoNivelRecord;
+
+    [Header("UI Menú Pausa")]
+    public TextMeshProUGUI textoPausaNombre;
+    public TextMeshProUGUI textoPausaTiempo;
+    public TextMeshProUGUI textoPausaPuntos;
+    public TextMeshProUGUI textoPausaRecord;
+
+    [Header("UI Bienvenida / Calibración")]
+    public Button botonCalibrarBienvenida;
+
     [Header("Punteros Láser")]
     public PunteroLaserVR laserIzquierdo;
     public PunteroLaserVR laserDerecho;
@@ -42,6 +62,11 @@ public class ControladorMenu : MonoBehaviour
     void Awake()
     {
         Instancia = this;
+
+        audioPreviewNivel = gameObject.AddComponent<AudioSource>();
+        audioPreviewNivel.loop = true;
+        audioPreviewNivel.volume = 0.3f;
+        audioPreviewNivel.playOnAwake = false;
     }
 
     void Start()
@@ -51,6 +76,7 @@ public class ControladorMenu : MonoBehaviour
         audioSourceMenu.ignoreListenerPause = true;
 
         if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(false);
+
         panelMenu.SetActive(true);
         AbrirPanel(panelBienvenida);
         ColocarMenuDelanteDeLaMirada();
@@ -59,6 +85,12 @@ public class ControladorMenu : MonoBehaviour
 
     void Update()
     {
+        if (panelBienvenida.activeInHierarchy && botonCalibrarBienvenida != null)
+        {
+            bool gripApretado = OVRInput.Get(OVRInput.RawButton.RHandTrigger);
+            botonCalibrarBienvenida.interactable = gripApretado;
+        }
+
         if (OVRInput.GetDown(OVRInput.RawButton.X))
         {
             if (GestorRitmo.Instancia != null && GestorRitmo.Instancia.juegoEmpezado && !calibracionEnProceso && !GestorRitmo.Instancia.enCuentaAtras)
@@ -67,10 +99,7 @@ public class ControladorMenu : MonoBehaviour
             }
         }
 
-        if (panelMenu.activeSelf)
-        {
-            ColocarMenuDelanteDeLaMirada();
-        }
+        if (panelMenu.activeSelf) ColocarMenuDelanteDeLaMirada();
     }
 
     public void ReproducirSonidoClic()
@@ -88,11 +117,11 @@ public class ControladorMenu : MonoBehaviour
         panelResultados.SetActive(false);
 
         panelDestino.SetActive(true);
-    }
 
-    public void BotonUI_AvanzarDesdeBienvenida()
-    {
-        AbrirPanel(panelNiveles);
+        if (panelDestino != panelNiveles && audioPreviewNivel.isPlaying)
+        {
+            audioPreviewNivel.Stop();
+        }
     }
 
     public void BotonUI_IrAAjustes()
@@ -103,17 +132,60 @@ public class ControladorMenu : MonoBehaviour
     public void BotonUI_VolverDesdeAjustes()
     {
         AbrirPanel(panelNiveles);
+        ActualizarUINivelActual();
     }
 
-    public void BotonUI_JugarPruebaAleatoria()
+    public void BotonUI_SiguienteNivel()
     {
-        CerrarMenuYMostrarPista();
-        GestorRitmo.Instancia.EmpezarPruebaAleatoria();
+        if (catalogoCanciones == null || catalogoCanciones.Length == 0) return;
+        indiceCancionActual = (indiceCancionActual + 1) % catalogoCanciones.Length;
+        ActualizarUINivelActual();
     }
 
-    public void BotonUI_JugarTutorial()
+    public void BotonUI_AnteriorNivel()
     {
+        if (catalogoCanciones == null || catalogoCanciones.Length == 0) return;
+        indiceCancionActual--;
+        if (indiceCancionActual < 0) indiceCancionActual = catalogoCanciones.Length - 1;
+        ActualizarUINivelActual();
+    }
+
+    private void ActualizarUINivelActual()
+    {
+        if (catalogoCanciones == null || catalogoCanciones.Length == 0) return;
+
+        DatosCancionRitmo cancion = catalogoCanciones[indiceCancionActual];
+
+        if (textoNivelNombre != null) textoNivelNombre.text = $"{indiceCancionActual}: {cancion.nombreCancion}"; //Empieza en 0 el índice para que sea ese el tutorial
+        if (textoNivelArtista != null) textoNivelArtista.text = "Artista: " + cancion.artista;
+
+        if (textoNivelDuracion != null)
+        {
+            float segs = cancion.archivoAudio != null ? cancion.archivoAudio.length : 0f;
+            textoNivelDuracion.text = $"Duración: {Mathf.FloorToInt(segs / 60)}:{Mathf.FloorToInt(segs % 60):00}";
+        }
+
+        if (textoNivelRecord != null && GestorDatosUsuario.Instancia != null)
+        {
+            int record = GestorDatosUsuario.Instancia.ObtenerRecordPorNivel(cancion.nombreCancion);
+            textoNivelRecord.text = $"Récord personal: {record} puntos";
+        }
+
+        if (cancion.archivoAudio != null)
+        {
+            audioPreviewNivel.clip = cancion.archivoAudio;
+            audioPreviewNivel.Play();
+        }
+    }
+
+    public void BotonUI_JugarNivelSeleccionado()
+    {
+        if (catalogoCanciones == null || catalogoCanciones.Length == 0) return;
+
+        audioPreviewNivel.Stop(); 
         CerrarMenuYMostrarPista();
+
+        GestorRitmo.Instancia.cancionActual = catalogoCanciones[indiceCancionActual];
         GestorRitmo.Instancia.EmpezarTutorial();
     }
 
@@ -121,11 +193,29 @@ public class ControladorMenu : MonoBehaviour
     {
         panelMenu.SetActive(true);
         if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(false);
-
         ActualizarLaseres(true);
+
+        if (GestorRitmo.Instancia.cancionActual != null)
+        {
+            if (textoPausaNombre != null) textoPausaNombre.text = GestorRitmo.Instancia.cancionActual.nombreCancion;
+
+            if (textoPausaTiempo != null)
+            {
+                float tRestante = GestorRitmo.Instancia.ObtenerTiempoRestante();
+                textoPausaTiempo.text = $"Faltan: {Mathf.FloorToInt(tRestante / 60)}:{Mathf.FloorToInt(tRestante % 60):00}";
+            }
+
+            if (textoPausaPuntos != null) textoPausaPuntos.text = $"Puntos actuales: {GestorRitmo.Instancia.ObtenerPuntuacionActual()}";
+
+            if (textoPausaRecord != null && GestorDatosUsuario.Instancia != null)
+            {
+                int record = GestorDatosUsuario.Instancia.ObtenerRecordPorNivel(GestorRitmo.Instancia.cancionActual.nombreCancion);
+                textoPausaRecord.text = $"Récord a batir: {record}";
+            }
+        }
+
         AbrirPanel(panelPausa);
         ColocarMenuDelanteDeLaMirada();
-
         GestorRitmo.Instancia.PausarJuego();
     }
 
@@ -146,7 +236,9 @@ public class ControladorMenu : MonoBehaviour
         GestorRitmo.Instancia.DetenerTodo();
         if (contenedorJuego != null) contenedorJuego.gameObject.SetActive(false);
         ActualizarLaseres(true);
+
         AbrirPanel(panelNiveles);
+        ActualizarUINivelActual();
     }
 
     public void MostrarResultadosFinales(bool esVictoria, int puntuacion, int maxRacha)
@@ -207,7 +299,7 @@ public class ControladorMenu : MonoBehaviour
         }
 
         if (laserIzquierdo != null) laserIzquierdo.enabled = true;
-        if (laserDerecho != null) laserDerecho.enabled = true;
+        if (laserDerecho != null) laserDerecho.enabled = false; //Como el láser derecho se usa para la pierna, lo mantenemos desactivado en el menú para evitar confusiones
         if (inputModule != null && laserDerecho != null) inputModule.rayTransform = laserDerecho.transform;
     }
 
@@ -225,28 +317,34 @@ public class ControladorMenu : MonoBehaviour
 
         DetectorPiernaVR detector = DetectorPiernaVR.Instancia;
 
-        yield return FaseContador("1/5: MANTÉN LA PIERNA EN REPOSO");
+        yield return FaseContador("1/5: MANTÉN LAS PIERNAS EN REPOSO");
         detector.calibracion.reposo = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("2/5: INCLINA LA PIERNA A LA IZQUIERDA");
+        yield return FaseContador("2/5: INCLINA LAS PIERNAS A LA IZQUIERDA");
         detector.calibracion.izquierda = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("3/5: INCLINA LA PIERNA A LA DERECHA");
+        yield return FaseContador("3/5: INCLINA LAS PIERNAS A LA DERECHA");
         detector.calibracion.derecha = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("4/5: ESTIRA LA PIERNA (ABAJO)");
+        yield return FaseContador("4/5: ESTIRA LAS PIERNAS (ABAJO)");
         detector.calibracion.extendida = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("5/5: LEVANTA LA RODILLA (ARRIBA)");
+        yield return FaseContador("5/5: LEVANTA LAS RODILLAS (ARRIBA)");
         detector.calibracion.levantada = detector.ObtenerDatosHardware();
 
         textoInstrucciones.text = "¡CALIBRACIÓN GUARDADA!";
         textoCuentaAtras.text = "OK";
         yield return new WaitForSecondsRealtime(2f);
 
-        panelCuentaAtras.SetActive(false);
         calibracionEnProceso = false;
-        AbrirPanel(panelAjustes);
+
+        if (NotificacionFlotanteVR.Instancia != null)
+        {
+            NotificacionFlotanteVR.Instancia.MostrarNotificacion("Si durante el juego sientes que la calibración no es adecuada, puedes volver a calibrar desde Ajustes.", 6f);
+        }
+
+        AbrirPanel(panelNiveles);
+        ActualizarUINivelActual();
         ActualizarLaseres(true);
     }
 

@@ -1,0 +1,231 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08f3add950f69e4b960778c4790963d, type: 3}
+  m_Name: Nivel 1 Citrus Circuit
+  m_EditorClassIdentifier: Assembly-CSharp::DatosCancionRitmo
+  nombreCancion: Citrus Circuit
+  artista: Suno AI
+  archivoAudio: {fileID: 8300000, guid: 7c68a9aba38c587488e6d54da60b8247, type: 3}
+  bpm: 100
+  offsetInicial: 0.1
+  desfasesExtra: []
+  notasFacil:
+  - tiempoAparicion: 4.9
+    tipoNota: 0
+  - tiempoAparicion: 6.1000004
+    tipoNota: 1
+  - tiempoAparicion: 7.3
+    tipoNota: 0
+  - tiempoAparicion: 7.9
+    tipoNota: 2
+  - tiempoAparicion: 8.5
+    tipoNota: 0
+  - tiempoAparicion: 9.700001
+    tipoNota: 1
+  - tiempoAparicion: 10.900001
+    tipoNota: 0
+  - tiempoAparicion: 12.1
+    tipoNota: 2
+  - tiempoAparicion: 14.500001
+    tipoNota: 3
+  - tiempoAparicion: 15.700001
+    tipoNota: 0
+  - tiempoAparicion: 16.900002
+    tipoNota: 4
+  - tiempoAparicion: 17.5
+    tipoNota: 0
+  - tiempoAparicion: 18.1
+    tipoNota: 3
+  - tiempoAparicion: 19.300001
+    tipoNota: 0
+  - tiempoAparicion: 20.5
+    tipoNota: 1
+  - tiempoAparicion: 21.7
+    tipoNota: 0
+  - tiempoAparicion: 24.1
+    tipoNota: 3
+  - tiempoAparicion: 25.300001
+    tipoNota: 0
+  - tiempoAparicion: 26.500002
+    tipoNota: 2
+  - tiempoAparicion: 27.1
+    tipoNota: 0
+  - tiempoAparicion: 27.7
+    tipoNota: 1
+  - tiempoAparicion: 29.500002
+    tipoNota: 0
+  - tiempoAparicion: 30.7
+    tipoNota: 1
+  - tiempoAparicion: 31.900002
+    tipoNota: 2
+  - tiempoAparicion: 33.100002
+    tipoNota: 0
+  - tiempoAparicion: 34.300003
+    tipoNota: 3
+  - tiempoAparicion: 35.5
+    tipoNota: 0
+  - tiempoAparicion: 36.7
+    tipoNota: 4
+  - tiempoAparicion: 37.9
+    tipoNota: 0
+  - tiempoAparicion: 39.100002
+    tipoNota: 1
+  - tiempoAparicion: 40.300003
+    tipoNota: 2
+  - tiempoAparicion: 41.5
+    tipoNota: 0
+  - tiempoAparicion: 42.7
+    tipoNota: 3
+  - tiempoAparicion: 43.9
+    tipoNota: 4
+  - tiempoAparicion: 45.100002
+    tipoNota: 0
+  - tiempoAparicion: 46.300003
+    tipoNota: 1
+  - tiempoAparicion: 47.5
+    tipoNota: 2
+  - tiempoAparicion: 48.7
+    tipoNota: 0
+  - tiempoAparicion: 49.9
+    tipoNota: 3
+  - tiempoAparicion: 51.100002
+    tipoNota: 0
+  - tiempoAparicion: 52.300003
+    tipoNota: 4
+  - tiempoAparicion: 53.500004
+    tipoNota: 0
+  - tiempoAparicion: 54.7
+    tipoNota: 1
+  - tiempoAparicion: 55.9
+    tipoNota: 0
+  - tiempoAparicion: 57.100002
+    tipoNota: 2
+  - tiempoAparicion: 58.300003
+    tipoNota: 0
+  - tiempoAparicion: 59.500004
+    tipoNota: 0
+  - tiempoAparicion: 60.7
+    tipoNota: 2
+  - tiempoAparicion: 61.9
+    tipoNota: 1
+  - tiempoAparicion: 63.100002
+    tipoNota: 0
+  - tiempoAparicion: 64.3
+    tipoNota: 3
+  - tiempoAparicion: 65.5
+    tipoNota: 4
+  - tiempoAparicion: 66.700005
+    tipoNota: 0
+  - tiempoAparicion: 67.9
+    tipoNota: 2
+  - tiempoAparicion: 69.100006
+    tipoNota: 1
+  - tiempoAparicion: 70.3
+    tipoNota: 0
+  - tiempoAparicion: 72.100006
+    tipoNota: 3
+  - tiempoAparicion: 73.3
+    tipoNota: 4
+  - tiempoAparicion: 74.5
+    tipoNota: 0
+  - tiempoAparicion: 75.100006
+    tipoNota: 1
+  - tiempoAparicion: 75.700005
+    tipoNota: 2
+  - tiempoAparicion: 79.3
+    tipoNota: 2
+  - tiempoAparicion: 80.5
+    tipoNota: 1
+  - tiempoAparicion: 81.700005
+    tipoNota: 0
+  - tiempoAparicion: 82.9
+    tipoNota: 3
+  - tiempoAparicion: 84.100006
+    tipoNota: 4
+  - tiempoAparicion: 85.3
+    tipoNota: 0
+  - tiempoAparicion: 86.5
+    tipoNota: 1
+  - tiempoAparicion: 87.700005
+    tipoNota: 2
+  - tiempoAparicion: 88.9
+    tipoNota: 0
+  - tiempoAparicion: 90.100006
+    tipoNota: 3
+  - tiempoAparicion: 91.3
+    tipoNota: 0
+  - tiempoAparicion: 92.5
+    tipoNota: 2
+  - tiempoAparicion: 93.700005
+    tipoNota: 1
+  - tiempoAparicion: 94.9
+    tipoNota: 1
+  - tiempoAparicion: 96.100006
+    tipoNota: 2
+  - tiempoAparicion: 97.3
+    tipoNota: 4
+  - tiempoAparicion: 98.50001
+    tipoNota: 4
+  - tiempoAparicion: 99.700005
+    tipoNota: 0
+  - tiempoAparicion: 100.9
+    tipoNota: 0
+  - tiempoAparicion: 102.100006
+    tipoNota: 3
+  - tiempoAparicion: 103.3
+    tipoNota: 3
+  - tiempoAparicion: 104.50001
+    tipoNota: 0
+  - tiempoAparicion: 105.700005
+    tipoNota: 1
+  - tiempoAparicion: 106.3
+    tipoNota: 2
+  - tiempoAparicion: 106.9
+    tipoNota: 1
+  - tiempoAparicion: 107.50001
+    tipoNota: 2
+  - tiempoAparicion: 108.100006
+    tipoNota: 0
+  - tiempoAparicion: 110.50001
+    tipoNota: 3
+  - tiempoAparicion: 111.700005
+    tipoNota: 0
+  - tiempoAparicion: 112.9
+    tipoNota: 4
+  - tiempoAparicion: 113.50001
+    tipoNota: 0
+  - tiempoAparicion: 114.100006
+    tipoNota: 0
+  - tiempoAparicion: 115.3
+    tipoNota: 1
+  - tiempoAparicion: 116.50001
+    tipoNota: 2
+  - tiempoAparicion: 117.700005
+    tipoNota: 0
+  - tiempoAparicion: 120.100006
+    tipoNota: 2
+  - tiempoAparicion: 121.3
+    tipoNota: 1
+  - tiempoAparicion: 122.50001
+    tipoNota: 0
+  - tiempoAparicion: 123.100006
+    tipoNota: 2
+  - tiempoAparicion: 123.700005
+    tipoNota: 1
+  - tiempoAparicion: 127.3
+    tipoNota: 0
+  - tiempoAparicion: 129.70001
+    tipoNota: 0
+  - tiempoAparicion: 130.90001
+    tipoNota: 0
+  notasNormal: []
+  notasDificil: []

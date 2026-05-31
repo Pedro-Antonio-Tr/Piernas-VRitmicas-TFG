@@ -13,7 +13,7 @@ public class GestorRitmo : MonoBehaviour
 
     [Header("Archivos de Canción")]
     [Tooltip("El archivo creado con tu herramienta para el Tutorial")]
-    public DatosCancionRitmo cancionTutorial;
+    public DatosCancionRitmo cancionActual;
     private AudioSource reproductorMusica;
 
     [Header("Prefabs de las Notas")]
@@ -114,13 +114,13 @@ public class GestorRitmo : MonoBehaviour
 
     public void EmpezarTutorial()
     {
-        if (cancionTutorial == null)
+        if (cancionActual == null)
         {
             Debug.LogError("¡No has asignado el archivo DatosCancionRitmo en el Gestor!");
             return;
         }
         esModoTutorial = true;
-        reproductorMusica.clip = cancionTutorial.archivoAudio;
+        reproductorMusica.clip = cancionActual.archivoAudio;
         IniciarPartidaComun();
     }
 
@@ -155,7 +155,13 @@ public class GestorRitmo : MonoBehaviour
     {
         juegoEmpezado = false;
         Time.timeScale = 1f;
-        if (bucleJuego != null) StopCoroutine(bucleJuego);
+
+        if (bucleJuego != null)
+        {
+            StopCoroutine(bucleJuego);
+            bucleJuego = null;
+        }
+
         reproductorMusica.Stop();
         LimpiarPista();
     }
@@ -178,21 +184,30 @@ public class GestorRitmo : MonoBehaviour
                 yield return new WaitForSecondsRealtime(1f);
             }
             textoCuentaAtrasPista.text = "¡YA!";
-            yield return new WaitForSecondsRealtime(0.3f);
+            yield return new WaitForSecondsRealtime(0.5f);
             textoCuentaAtrasPista.gameObject.SetActive(false);
         }
 
         enCuentaAtras = false;
         Time.timeScale = 1f;
-
-        if (esModoTutorial)
+        if (bucleJuego == null)
         {
-            reproductorMusica.Play();
-            bucleJuego = StartCoroutine(BucleLectorTutorial());
+            if (esModoTutorial)
+            {
+                reproductorMusica.Play();
+                bucleJuego = StartCoroutine(BucleLectorTutorial());
+            }
+            else
+            {
+                bucleJuego = StartCoroutine(BucleGeneradorAleatorio());
+            }
         }
         else
         {
-            bucleJuego = StartCoroutine(BucleGeneradorAleatorio());
+            if (esModoTutorial)
+            {
+                reproductorMusica.UnPause(); 
+            }
         }
     }
 
@@ -207,7 +222,7 @@ public class GestorRitmo : MonoBehaviour
 
     private IEnumerator BucleLectorTutorial()
     {
-        List<DatosCancionRitmo.NotaGuardada> notas = cancionTutorial.notasFacil;
+        List<DatosCancionRitmo.NotaGuardada> notas = cancionActual.notasFacil;
         int indiceNota = 0;
 
         while (juegoEmpezado && indiceNota < notas.Count)
@@ -401,5 +416,19 @@ public class GestorRitmo : MonoBehaviour
             contenedorPista.position = posPista;
             contenedorPista.rotation = Quaternion.LookRotation(lookDirection);
         }
+    }
+
+    public float ObtenerTiempoRestante()
+    {
+        if (reproductorMusica != null && reproductorMusica.clip != null)
+        {
+            return Mathf.Max(0, reproductorMusica.clip.length - reproductorMusica.time);
+        }
+        return 0f;
+    }
+
+    public int ObtenerPuntuacionActual()
+    {
+        return puntuacionTotal;
     }
 }

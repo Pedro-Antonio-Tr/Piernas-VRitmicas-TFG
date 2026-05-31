@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tutorial
   m_EditorClassIdentifier: Assembly-CSharp::DatosCancionRitmo
   nombreCancion: Tutorial
+  artista: Suno AI
   archivoAudio: {fileID: 8300000, guid: 3198b5ab87ffa1b4ba07d72bc0727eb3, type: 3}
   bpm: 90
   offsetInicial: 1

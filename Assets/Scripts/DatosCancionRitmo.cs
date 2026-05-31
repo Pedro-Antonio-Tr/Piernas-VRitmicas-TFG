@@ -6,6 +6,7 @@ public class DatosCancionRitmo : ScriptableObject
 {
     [Header("Datos de la Pista")]
     public string nombreCancion = "Sin Nombre";
+    public string artista = "Desconocido";
     public AudioClip archivoAudio;
 
     [Header("Configuración de Ritmo (Metrónomo)")]
