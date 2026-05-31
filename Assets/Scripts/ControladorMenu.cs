@@ -315,6 +315,7 @@ public class ControladorMenu : MonoBehaviour
         AbrirPanel(panelCuentaAtras);
         ActualizarLaseres(false);
 
+        DatosCalibracionPierna calibracion = GestorDatosUsuario.Instancia.configActual.calibracionPierna;
         DetectorPiernaVR detector = DetectorPiernaVR.Instancia;
 
         yield return FaseContador("1/5: MANTÉN LAS PIERNAS EN REPOSO");
@@ -331,6 +332,9 @@ public class ControladorMenu : MonoBehaviour
 
         yield return FaseContador("5/5: LEVANTA LAS RODILLAS (ARRIBA)");
         detector.calibracion.levantada = detector.ObtenerDatosHardware();
+
+        GestorDatosUsuario.Instancia.GuardarConfiguracion();
+        detector.calibracion = calibracion;
 
         textoInstrucciones.text = "¡CALIBRACIÓN GUARDADA!";
         textoCuentaAtras.text = "OK";

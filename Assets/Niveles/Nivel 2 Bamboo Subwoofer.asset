@@ -15,9 +15,285 @@ MonoBehaviour:
   nombreCancion: Bamboo Subwoofer
   artista: Suno AI
   archivoAudio: {fileID: 8300000, guid: 3a005e010f1b34a48916361ef2f0f4d7, type: 3}
-  bpm: 85
+  bpm: 90
   offsetInicial: 0
   desfasesExtra: []
-  notasFacil: []
+  notasFacil:
+  - tiempoAparicion: 5.3333335
+    tipoNota: 0
+  - tiempoAparicion: 6.666667
+    tipoNota: 1
+  - tiempoAparicion: 8
+    tipoNota: 2
+  - tiempoAparicion: 9.333334
+    tipoNota: 3
+  - tiempoAparicion: 10.666667
+    tipoNota: 4
+  - tiempoAparicion: 12
+    tipoNota: 0
+  - tiempoAparicion: 13.333334
+    tipoNota: 0
+  - tiempoAparicion: 14.666667
+    tipoNota: 2
+  - tiempoAparicion: 16
+    tipoNota: 1
+  - tiempoAparicion: 17.333334
+    tipoNota: 3
+  - tiempoAparicion: 18.666668
+    tipoNota: 4
+  - tiempoAparicion: 20
+    tipoNota: 0
+  - tiempoAparicion: 21.333334
+    tipoNota: 1
+  - tiempoAparicion: 22
+    tipoNota: 2
+  - tiempoAparicion: 22.666668
+    tipoNota: 3
+  - tiempoAparicion: 23.333334
+    tipoNota: 0
+  - tiempoAparicion: 24
+    tipoNota: 0
+  - tiempoAparicion: 24.666668
+    tipoNota: 1
+  - tiempoAparicion: 25.333334
+    tipoNota: 2
+  - tiempoAparicion: 26.666668
+    tipoNota: 2
+  - tiempoAparicion: 27.333334
+    tipoNota: 1
+  - tiempoAparicion: 28
+    tipoNota: 0
+  - tiempoAparicion: 28.666668
+    tipoNota: 3
+  - tiempoAparicion: 29.333334
+    tipoNota: 0
+  - tiempoAparicion: 30
+    tipoNota: 0
+  - tiempoAparicion: 32
+    tipoNota: 1
+  - tiempoAparicion: 32.666668
+    tipoNota: 2
+  - tiempoAparicion: 33.333336
+    tipoNota: 0
+  - tiempoAparicion: 34.666668
+    tipoNota: 0
+  - tiempoAparicion: 35.333336
+    tipoNota: 1
+  - tiempoAparicion: 36
+    tipoNota: 2
+  - tiempoAparicion: 37.333336
+    tipoNota: 0
+  - tiempoAparicion: 38
+    tipoNota: 3
+  - tiempoAparicion: 38.666668
+    tipoNota: 0
+  - tiempoAparicion: 40
+    tipoNota: 4
+  - tiempoAparicion: 40.666668
+    tipoNota: 0
+  - tiempoAparicion: 41.333336
+    tipoNota: 4
+  - tiempoAparicion: 42.666668
+    tipoNota: 1
+  - tiempoAparicion: 43.333336
+    tipoNota: 2
+  - tiempoAparicion: 44
+    tipoNota: 0
+  - tiempoAparicion: 45.333336
+    tipoNota: 0
+  - tiempoAparicion: 46
+    tipoNota: 1
+  - tiempoAparicion: 46.666668
+    tipoNota: 2
+  - tiempoAparicion: 48
+    tipoNota: 0
+  - tiempoAparicion: 48.666668
+    tipoNota: 3
+  - tiempoAparicion: 49.333336
+    tipoNota: 0
+  - tiempoAparicion: 50.666668
+    tipoNota: 0
+  - tiempoAparicion: 51.333336
+    tipoNota: 4
+  - tiempoAparicion: 52
+    tipoNota: 0
+  - tiempoAparicion: 53.333336
+    tipoNota: 1
+  - tiempoAparicion: 54
+    tipoNota: 0
+  - tiempoAparicion: 54.666668
+    tipoNota: 2
+  - tiempoAparicion: 56
+    tipoNota: 2
+  - tiempoAparicion: 56.666668
+    tipoNota: 0
+  - tiempoAparicion: 57.333336
+    tipoNota: 1
+  - tiempoAparicion: 58.666668
+    tipoNota: 3
+  - tiempoAparicion: 59.333336
+    tipoNota: 0
+  - tiempoAparicion: 60
+    tipoNota: 4
+  - tiempoAparicion: 61.333336
+    tipoNota: 4
+  - tiempoAparicion: 62
+    tipoNota: 0
+  - tiempoAparicion: 62.666668
+    tipoNota: 3
+  - tiempoAparicion: 64
+    tipoNota: 0
+  - tiempoAparicion: 64.66667
+    tipoNota: 1
+  - tiempoAparicion: 65.333336
+    tipoNota: 0
+  - tiempoAparicion: 66
+    tipoNota: 0
+  - tiempoAparicion: 66.66667
+    tipoNota: 2
+  - tiempoAparicion: 67.333336
+    tipoNota: 0
+  - tiempoAparicion: 69.333336
+    tipoNota: 3
+  - tiempoAparicion: 70
+    tipoNota: 0
+  - tiempoAparicion: 70.66667
+    tipoNota: 3
+  - tiempoAparicion: 72
+    tipoNota: 0
+  - tiempoAparicion: 72.66667
+    tipoNota: 4
+  - tiempoAparicion: 73.333336
+    tipoNota: 0
+  - tiempoAparicion: 74.66667
+    tipoNota: 0
+  - tiempoAparicion: 76
+    tipoNota: 1
+  - tiempoAparicion: 77.333336
+    tipoNota: 2
+  - tiempoAparicion: 78.66667
+    tipoNota: 3
+  - tiempoAparicion: 80
+    tipoNota: 4
+  - tiempoAparicion: 82
+    tipoNota: 0
+  - tiempoAparicion: 83.333336
+    tipoNota: 1
+  - tiempoAparicion: 84.66667
+    tipoNota: 2
+  - tiempoAparicion: 86
+    tipoNota: 0
+  - tiempoAparicion: 87.333336
+    tipoNota: 0
+  - tiempoAparicion: 88.66667
+    tipoNota: 1
+  - tiempoAparicion: 89.333336
+    tipoNota: 0
+  - tiempoAparicion: 90.66667
+    tipoNota: 2
+  - tiempoAparicion: 92
+    tipoNota: 0
+  - tiempoAparicion: 93.333336
+    tipoNota: 3
+  - tiempoAparicion: 94.66667
+    tipoNota: 0
+  - tiempoAparicion: 96
+    tipoNota: 4
+  - tiempoAparicion: 97.333336
+    tipoNota: 0
+  - tiempoAparicion: 98.66667
+    tipoNota: 0
+  - tiempoAparicion: 100
+    tipoNota: 1
+  - tiempoAparicion: 101.333336
+    tipoNota: 2
+  - tiempoAparicion: 102
+    tipoNota: 0
+  - tiempoAparicion: 103.333336
+    tipoNota: 0
+  - tiempoAparicion: 104.66667
+    tipoNota: 4
+  - tiempoAparicion: 106
+    tipoNota: 0
+  - tiempoAparicion: 107.333336
+    tipoNota: 3
+  - tiempoAparicion: 108
+    tipoNota: 0
+  - tiempoAparicion: 109.333336
+    tipoNota: 0
+  - tiempoAparicion: 110.66667
+    tipoNota: 1
+  - tiempoAparicion: 111.333336
+    tipoNota: 0
+  - tiempoAparicion: 112.66667
+    tipoNota: 2
+  - tiempoAparicion: 114
+    tipoNota: 0
+  - tiempoAparicion: 115.333336
+    tipoNota: 1
+  - tiempoAparicion: 116.66667
+    tipoNota: 2
+  - tiempoAparicion: 118
+    tipoNota: 0
+  - tiempoAparicion: 119.333336
+    tipoNota: 2
+  - tiempoAparicion: 120.66667
+    tipoNota: 2
+  - tiempoAparicion: 121.333336
+    tipoNota: 0
+  - tiempoAparicion: 122
+    tipoNota: 1
+  - tiempoAparicion: 123.333336
+    tipoNota: 1
+  - tiempoAparicion: 124
+    tipoNota: 0
+  - tiempoAparicion: 125.333336
+    tipoNota: 3
+  - tiempoAparicion: 126.66667
+    tipoNota: 3
+  - tiempoAparicion: 127.333336
+    tipoNota: 0
+  - tiempoAparicion: 128
+    tipoNota: 4
+  - tiempoAparicion: 129.33334
+    tipoNota: 4
+  - tiempoAparicion: 130
+    tipoNota: 0
+  - tiempoAparicion: 131.33334
+    tipoNota: 0
+  - tiempoAparicion: 132.66667
+    tipoNota: 1
+  - tiempoAparicion: 133.33334
+    tipoNota: 0
+  - tiempoAparicion: 134
+    tipoNota: 2
+  - tiempoAparicion: 135.33334
+    tipoNota: 2
+  - tiempoAparicion: 136
+    tipoNota: 0
+  - tiempoAparicion: 136.66667
+    tipoNota: 1
+  - tiempoAparicion: 138.66667
+    tipoNota: 3
+  - tiempoAparicion: 139.33334
+    tipoNota: 0
+  - tiempoAparicion: 140
+    tipoNota: 4
+  - tiempoAparicion: 141.33334
+    tipoNota: 4
+  - tiempoAparicion: 142
+    tipoNota: 0
+  - tiempoAparicion: 142.66667
+    tipoNota: 3
+  - tiempoAparicion: 144
+    tipoNota: 0
+  - tiempoAparicion: 145.33334
+    tipoNota: 0
+  - tiempoAparicion: 146.66667
+    tipoNota: 0
+  - tiempoAparicion: 148
+    tipoNota: 0
+  - tiempoAparicion: 149.33334
+    tipoNota: 0
   notasNormal: []
   notasDificil: []

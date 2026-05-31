@@ -6,41 +6,38 @@ public class MonitorClinico : MonoBehaviour
 {
     public static MonitorClinico Instancia;
 
-    public enum ModoControl { Izquierdo, Derecho, Ambos }
     public enum NivelDificultad { Facil, Normal, Dificil }
 
-    [Header("Ajustes de Dificultad")]
+    [Header("Ajustes de Partida")]
     public NivelDificultad dificultadActual = NivelDificultad.Facil;
 
-    [Header("Configuración Actual")]
-    public ModoControl modoActual = ModoControl.Derecho;
+    [Header("Referencias (Hardware)")]
+    public Transform headAnchor; 
+    public Transform mandoDerecho; 
 
-    [Header("Referencias (Trackers)")]
-    public Transform mandoIzquierdo;
-    public Transform mandoDerecho;
+    [Header("Métricas Clínicas Recopiladas")]
+    public float indiceFatiga = 0f;
 
-    [Header("Métricas Recopiladas")]
-    public float tiempoMandoIzquierdo = 0f;
-    public float tiempoMandoDerecho = 0f;
-    public float tiempoAmbosMandos = 0f;
-    public float indiceFatiga = 0f; // Acumulación de micro-temblores
+    public float maxExtensionDerX = 0f;
+    public float maxExtensionIzqX = 0f;
+    public float maxExtensionArribaY = 0f;
+    public float maxExtensionAbajoY = 0f;
 
-    [Header("Registro de golpes")]
-    public int golpesIzquierda = 0;
-    public int golpesDerecha = 0;
+    [Header("Rendimiento Rítmico")]
+    public int golpesPerfectos = 0;
+    public int golpesMedios = 0;
+    public int fallos = 0;
 
-    [Header("Telemetría (Tracking Raw)")]
-    public Transform headAnchor;
-    public float frecuenciaRegistro = 0.1f;
-    public float umbralMovimientoBrusco = 3.0f;
+    [Header("Telemetría Cruda (Tracking)")]
+    public float frecuenciaRegistro = 0.1f; 
+    public float umbralMovimientoBrusco = 3.5f;
 
     private StreamWriter escritorTelemetria;
     private bool grabandoTelemetria = false;
     private float tiempoInicioSesionTelemetria;
 
-    // Variables internas para fatiga
-    private Quaternion rotacionAnteriorIzq;
     private Quaternion rotacionAnteriorDer;
+    private string ultimoEventoRegistrado = "NORMAL";
 
     void Awake()
     {
@@ -49,92 +46,57 @@ public class MonitorClinico : MonoBehaviour
 
     void Start()
     {
-        if (mandoIzquierdo != null) rotacionAnteriorIzq = mandoIzquierdo.rotation;
         if (mandoDerecho != null) rotacionAnteriorDer = mandoDerecho.rotation;
     }
 
     void Update()
     {
-        if (Time.timeScale == 0) return;
+        if (Time.timeScale == 0 || !grabandoTelemetria) return;
 
-        RegistrarTiempoUso();
-        MedirFatiga();
+        MedirFatigaYRangoMovimiento();
     }
 
-    void RegistrarTiempoUso()
+    void MedirFatigaYRangoMovimiento()
     {
-        switch (modoActual)
+        if (mandoDerecho != null)
         {
-            case ModoControl.Izquierdo: tiempoMandoIzquierdo += Time.deltaTime; break;
-            case ModoControl.Derecho: tiempoMandoDerecho += Time.deltaTime; break;
-            case ModoControl.Ambos: tiempoAmbosMandos += Time.deltaTime; break;
-        }
-    }
+            float deltaRotDer = Quaternion.Angle(rotacionAnteriorDer, mandoDerecho.rotation);
+            indiceFatiga += deltaRotDer;
+            rotacionAnteriorDer = mandoDerecho.rotation;
 
-    void MedirFatiga()
-    {
-        if (modoActual == ModoControl.Izquierdo || modoActual == ModoControl.Ambos)
-        {
-            if (mandoIzquierdo != null)
-            {
-                float deltaRotIzq = Quaternion.Angle(rotacionAnteriorIzq, mandoIzquierdo.rotation);
-                indiceFatiga += deltaRotIzq;
-                rotacionAnteriorIzq = mandoIzquierdo.rotation;
-            }
-        }
+            Vector3 posPierna = mandoDerecho.localPosition;
 
-        if (modoActual == ModoControl.Derecho || modoActual == ModoControl.Ambos)
-        {
-            if (mandoDerecho != null)
-            {
-                float deltaRotDer = Quaternion.Angle(rotacionAnteriorDer, mandoDerecho.rotation);
-                indiceFatiga += deltaRotDer;
-                rotacionAnteriorDer = mandoDerecho.rotation;
-            }
+            if (posPierna.x > maxExtensionDerX) maxExtensionDerX = posPierna.x;
+            if (posPierna.x < maxExtensionIzqX) maxExtensionIzqX = posPierna.x;
+            if (posPierna.y > maxExtensionArribaY) maxExtensionArribaY = posPierna.y;
+            if (posPierna.y < maxExtensionAbajoY) maxExtensionAbajoY = posPierna.y;
         }
     }
 
-    public void GuardarDatosCSV()
+    public void RegistrarGolpe(int calidad)
     {
-        string fechaHora = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-        string nombreArchivo = $"Sesion_{fechaHora}.csv";
-        string ruta = Path.Combine(Application.persistentDataPath, nombreArchivo);
-
-        try
-        {
-            using (StreamWriter writer = new StreamWriter(ruta, false))
-            {
-                writer.WriteLine("Fecha,Modo_Mando_Derecho,Modo_Mando_Izquierdo,Modo_Ambos_Mandos,Dificultad,Indice_Fatiga");
-                writer.WriteLine($"{fechaHora},{tiempoMandoDerecho:F2},{tiempoMandoIzquierdo:F2},{tiempoAmbosMandos:F2},{dificultadActual},{indiceFatiga:F2}");
-            }
-            Debug.Log("¡CSV Guardado con éxito en: " + ruta + "!");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Error al guardar el CSV: " + e.Message);
-        }
-    }
-
-    public void ReiniciarContadoresLateralidad()
-    {
-        golpesIzquierda = 0;
-        golpesDerecha = 0;
+        if (calidad == 2) { golpesPerfectos++; ultimoEventoRegistrado = "HIT_PERFECTO"; }
+        else if (calidad == 1) { golpesMedios++; ultimoEventoRegistrado = "HIT_TARDIO"; }
+        else { fallos++; ultimoEventoRegistrado = "MISS"; }
     }
 
     public void IniciarTelemetria(string nombreNivel)
     {
+        ReiniciarMetricas();
         string fechaHora = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string nombreArchivo = $"Telemetria_{GestorDatosUsuario.Instancia.idUsuario}_{nombreNivel}_{fechaHora}.csv";
+        string nombreArchivo = $"TelemetriaPierna_{GestorDatosUsuario.Instancia.idUsuario}_{nombreNivel}_{fechaHora}.csv";
         string ruta = Path.Combine(GestorDatosUsuario.Instancia.RutaTracking, nombreArchivo);
 
         try
         {
             escritorTelemetria = new StreamWriter(ruta, false);
-            escritorTelemetria.WriteLine("Tiempo(s);Head_RotX;Head_RotY;Head_RotZ;L_PosX;L_PosY;L_PosZ;L_Vel(m/s);R_PosX;R_PosY;R_PosZ;R_Vel(m/s);Evento");
+            // Cabecera súper exhaustiva
+            escritorTelemetria.WriteLine("Tiempo(s);Head_PosX;Head_PosY;Head_PosZ;Head_RotX;Head_RotY;Head_RotZ;Leg_PosX;Leg_PosY;Leg_PosZ;Leg_RotX;Leg_RotY;Leg_RotZ;Leg_Vel(m/s);Evento");
 
             tiempoInicioSesionTelemetria = Time.time;
             grabandoTelemetria = true;
             StartCoroutine(RutinaRegistroTelemetria());
+            Debug.Log($"<color=cyan>Monitor Clínico:</color> Grabando telemetría en {nombreArchivo}");
         }
         catch (Exception e)
         {
@@ -142,7 +104,7 @@ public class MonitorClinico : MonoBehaviour
         }
     }
 
-    public void DetenerTelemetria()
+    public void DetenerTelemetriaYGuardarGlobal(string cancion, string resultado, int puntuacion, int rachaMax, float duracionCancion)
     {
         grabandoTelemetria = false;
         if (escritorTelemetria != null)
@@ -150,6 +112,36 @@ public class MonitorClinico : MonoBehaviour
             escritorTelemetria.Close();
             escritorTelemetria = null;
         }
+
+        int totalNotas = golpesPerfectos + golpesMedios + fallos;
+        float precision = 0f;
+        if (totalNotas > 0)
+        {
+            float puntosObtenidos = (golpesPerfectos * 1f) + (golpesMedios * 0.5f);
+            precision = (puntosObtenidos / totalNotas) * 100f;
+        }
+
+        GestorDatosUsuario.Instancia.GuardarPartidaRitmoCSV(
+            cancion,
+            dificultadActual.ToString(),
+            resultado,
+            puntuacion,
+            rachaMax,
+            precision,
+            indiceFatiga,
+            duracionCancion
+        );
+
+        Debug.Log($"ROM Registrado -> Max Arriba: {maxExtensionArribaY:F2}m | Max Abajo: {maxExtensionAbajoY:F2}m | Max Izq: {maxExtensionIzqX:F2}m | Max Der: {maxExtensionDerX:F2}m");
+    }
+
+    private void ReiniciarMetricas()
+    {
+        indiceFatiga = 0f;
+        maxExtensionDerX = 0f; maxExtensionIzqX = 0f;
+        maxExtensionArribaY = 0f; maxExtensionAbajoY = 0f;
+        golpesPerfectos = 0; golpesMedios = 0; fallos = 0;
+        ultimoEventoRegistrado = "INICIO";
     }
 
     private System.Collections.IEnumerator RutinaRegistroTelemetria()
@@ -159,28 +151,22 @@ public class MonitorClinico : MonoBehaviour
             if (Time.timeScale > 0)
             {
                 float t = Time.time - tiempoInicioSesionTelemetria;
+                Vector3 hP = headAnchor != null ? headAnchor.localPosition : Vector3.zero;
                 Vector3 hR = headAnchor != null ? headAnchor.eulerAngles : Vector3.zero;
-                Vector3 lP = mandoIzquierdo != null ? mandoIzquierdo.localPosition : Vector3.zero;
-                Vector3 rP = mandoDerecho != null ? mandoDerecho.localPosition : Vector3.zero;
+                Vector3 lP = mandoDerecho != null ? mandoDerecho.localPosition : Vector3.zero;
+                Vector3 lR = mandoDerecho != null ? mandoDerecho.eulerAngles : Vector3.zero;
 
-                float velL = 0f; float velR = 0f;
-                try
-                {
-                    velL = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch).magnitude;
-                    velR = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch).magnitude;
-                }
-                catch { }
+                float velL = 0f;
+                try { velL = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch).magnitude; } catch { }
 
-                string evento = "NORMAL";
-                if (velL > umbralMovimientoBrusco) evento = "MOVIMIENTO_BRUSCO_IZQ";
-                if (velR > umbralMovimientoBrusco) evento = "MOVIMIENTO_BRUSCO_DER";
+                string eventoEscribir = ultimoEventoRegistrado;
+                if (velL > umbralMovimientoBrusco) eventoEscribir = "ESPASMO_DETECTADO";
 
-                string linea = $"{t:F2};{hR.x:F2};{hR.y:F2};{hR.z:F2};{lP.x:F2};{lP.y:F2};{lP.z:F2};{velL:F2};{rP.x:F2};{rP.y:F2};{rP.z:F2};{velR:F2};{evento}";
+                string linea = $"{t:F2};{hP.x:F3};{hP.y:F3};{hP.z:F3};{hR.x:F2};{hR.y:F2};{hR.z:F2};{lP.x:F3};{lP.y:F3};{lP.z:F3};{lR.x:F2};{lR.y:F2};{lR.z:F2};{velL:F2};{eventoEscribir}";
 
-                if (escritorTelemetria != null)
-                {
-                    escritorTelemetria.WriteLine(linea);
-                }
+                if (escritorTelemetria != null) escritorTelemetria.WriteLine(linea);
+
+                ultimoEventoRegistrado = "NORMAL";
             }
             yield return new WaitForSeconds(frecuenciaRegistro);
         }
@@ -188,6 +174,7 @@ public class MonitorClinico : MonoBehaviour
 
     void OnDestroy()
     {
-        DetenerTelemetria();
+        grabandoTelemetria = false;
+        if (escritorTelemetria != null) escritorTelemetria.Close();
     }
 }

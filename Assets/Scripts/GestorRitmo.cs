@@ -79,6 +79,7 @@ public class GestorRitmo : MonoBehaviour
     private int progresoMultiplicador = 0;
     private float vidaActual;
     private float intensidadObjetivoLuz = 0f;
+    private float tiempoInicioPartida;
 
     void Awake()
     {
@@ -102,7 +103,7 @@ public class GestorRitmo : MonoBehaviour
 
         if (juegoEmpezado && esModoTutorial && !reproductorMusica.isPlaying && !enCuentaAtras && Time.timeScale > 0)
         {
-            StartCoroutine(VictoriaTutorial());
+            StartCoroutine(VictoriaNivel());
         }
     }
 
@@ -130,6 +131,12 @@ public class GestorRitmo : MonoBehaviour
         InicializarEstadisticas();
         LimpiarPista();
         juegoEmpezado = true;
+
+        tiempoInicioPartida = Time.time;
+        if (MonitorClinico.Instancia != null && cancionActual != null)
+        {
+            MonitorClinico.Instancia.IniciarTelemetria(cancionActual.nombreCancion);
+        }
         ReanudarJuegoConCuentaAtras();
     }
 
@@ -291,6 +298,8 @@ public class GestorRitmo : MonoBehaviour
     {
         if (!juegoEmpezado) return;
 
+        if (MonitorClinico.Instancia != null) MonitorClinico.Instancia.RegistrarGolpe(calidad);
+
         Color colorDestello = colorFallo;
 
         if (calidad > 0)
@@ -361,13 +370,27 @@ public class GestorRitmo : MonoBehaviour
     {
         if (rellenoBarraVida != null) rellenoBarraVida.color = colorVidaMuerte;
         DetenerTodo();
+
+        if (MonitorClinico.Instancia != null && cancionActual != null)
+        {
+            float duracion = Time.time - tiempoInicioPartida;
+            MonitorClinico.Instancia.DetenerTelemetriaYGuardarGlobal(cancionActual.nombreCancion, "DERROTA", puntuacionTotal, rachaMaxima, duracion);
+        }
+
         ControladorMenu.Instancia.MostrarResultadosFinales(false, puntuacionTotal, rachaMaxima);
     }
 
-    private IEnumerator VictoriaTutorial()
+    private IEnumerator VictoriaNivel()
     {
         yield return new WaitForSeconds(2f);
         DetenerTodo();
+
+        if (MonitorClinico.Instancia != null && cancionActual != null)
+        {
+            float duracion = Time.time - tiempoInicioPartida;
+            MonitorClinico.Instancia.DetenerTelemetriaYGuardarGlobal(cancionActual.nombreCancion, "VICTORIA", puntuacionTotal, rachaMaxima, duracion);
+        }
+
         ControladorMenu.Instancia.MostrarResultadosFinales(true, puntuacionTotal, rachaMaxima);
     }
 

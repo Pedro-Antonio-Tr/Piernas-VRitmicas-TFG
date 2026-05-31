@@ -15557,7 +15557,7 @@ PrefabInstance:
       objectReference: {fileID: 2015848087}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: catalogoCanciones.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: 'catalogoCanciones.Array.data[0]'
@@ -15567,6 +15567,10 @@ PrefabInstance:
       propertyPath: 'catalogoCanciones.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 74e3b9fe5953fa047aedd1f81e3c1104, type: 2}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: 'catalogoCanciones.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7fc6ec07c35a4fa43a45d8af47f90273, type: 2}
     - target: {fileID: 8678145602455131620, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_SizeDelta.x
       value: 200
@@ -15583,6 +15587,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ControladorMenu, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 8847048552640989267, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 631d7f5e08124834db4d274e4a972408, type: 3}
     - target: {fileID: 9093761134341443079, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
