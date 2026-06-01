@@ -114,6 +114,16 @@ public class ControladorMenu : MonoBehaviour
             }
         }
 
+        if (OVRInput.GetDown(OVRInput.RawButton.Y))
+        {
+            if (GestorRitmo.Instancia != null)
+            {
+                GestorRitmo.Instancia.CentrarPista();
+            }
+            tiempoMirandoFuera = 0f;
+            cooldownAviso = 15f;
+        }
+
         if (panelMenu.activeSelf) ColocarMenuDelanteDeLaMirada();
 
         ComprobarAtencionJugador();
@@ -368,25 +378,47 @@ public class ControladorMenu : MonoBehaviour
         AbrirPanel(panelCuentaAtras);
         ActualizarLaseres(false);
 
+        if (GestorDatosUsuario.Instancia == null)
+        {
+            Debug.LogError("Error: GestorDatosUsuario no está en la escena.");
+            yield break;
+        }
+
+        if (GestorDatosUsuario.Instancia.configActual == null)
+        {
+            GestorDatosUsuario.Instancia.configActual = new DatosConfiguracion();
+        }
+
+        if (GestorDatosUsuario.Instancia.configActual.calibracionPierna == null)
+        {
+            GestorDatosUsuario.Instancia.configActual.calibracionPierna = new DatosCalibracionPierna();
+        }
         DatosCalibracionPierna calibracion = GestorDatosUsuario.Instancia.configActual.calibracionPierna;
         DetectorPiernaVR detector = DetectorPiernaVR.Instancia;
 
+        if (detector == null)
+        {
+            Debug.LogError("Error: DetectorPiernaVR no está en la escena.");
+            yield break;
+        }
+
         yield return FaseContador("1/5: MANTÉN LAS PIERNAS EN REPOSO");
-        detector.calibracion.reposo = detector.ObtenerDatosHardware();
+        calibracion.reposo = detector.ObtenerDatosHardware();
 
         yield return FaseContador("2/5: INCLINA LAS PIERNAS A LA IZQUIERDA");
-        detector.calibracion.izquierda = detector.ObtenerDatosHardware();
+        calibracion.izquierda = detector.ObtenerDatosHardware();
 
         yield return FaseContador("3/5: INCLINA LAS PIERNAS A LA DERECHA");
-        detector.calibracion.derecha = detector.ObtenerDatosHardware();
+        calibracion.derecha = detector.ObtenerDatosHardware();
 
         yield return FaseContador("4/5: ESTIRA LAS PIERNAS (ABAJO)");
-        detector.calibracion.extendida = detector.ObtenerDatosHardware();
+        calibracion.extendida = detector.ObtenerDatosHardware();
 
         yield return FaseContador("5/5: LEVANTA LAS RODILLAS (ARRIBA)");
-        detector.calibracion.levantada = detector.ObtenerDatosHardware();
+        calibracion.levantada = detector.ObtenerDatosHardware();
 
         GestorDatosUsuario.Instancia.GuardarConfiguracion();
+
         detector.calibracion = calibracion;
 
         textoInstrucciones.text = "¡CALIBRACIÓN GUARDADA!";
@@ -451,7 +483,7 @@ public class ControladorMenu : MonoBehaviour
             {
                 if (NotificacionFlotanteVR.Instancia != null)
                 {
-                    NotificacionFlotanteVR.Instancia.MostrarNotificacion("Puedes centrar la pantalla pulsando Y o B.", 4f);
+                    NotificacionFlotanteVR.Instancia.MostrarNotificacion("Puedes centrar la pantalla pulsando Y.", 4f);
                 }
 
                 tiempoMirandoFuera = 0f;
