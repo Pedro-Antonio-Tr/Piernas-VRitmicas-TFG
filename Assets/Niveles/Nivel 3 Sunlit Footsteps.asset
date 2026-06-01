@@ -15,9 +15,393 @@ MonoBehaviour:
   nombreCancion: Sunlit Footsteps
   artista: Suno AI
   archivoAudio: {fileID: 8300000, guid: 22a526806e49fcc40b869c01c7227278, type: 3}
-  bpm: 115
+  bpm: 128
   offsetInicial: 0
   desfasesExtra: []
-  notasFacil: []
+  notasFacil:
+  - tiempoAparicion: 7.5
+    tipoNota: 1
+  - tiempoAparicion: 8.4375
+    tipoNota: 0
+  - tiempoAparicion: 9.84375
+    tipoNota: 2
+  - tiempoAparicion: 10.3125
+    tipoNota: 0
+  - tiempoAparicion: 11.71875
+    tipoNota: 0
+  - tiempoAparicion: 12.1875
+    tipoNota: 3
+  - tiempoAparicion: 13.125
+    tipoNota: 0
+  - tiempoAparicion: 13.59375
+    tipoNota: 4
+  - tiempoAparicion: 14.0625
+    tipoNota: 0
+  - tiempoAparicion: 15
+    tipoNota: 1
+  - tiempoAparicion: 15.46875
+    tipoNota: 0
+  - tiempoAparicion: 15.9375
+    tipoNota: 2
+  - tiempoAparicion: 16.875
+    tipoNota: 2
+  - tiempoAparicion: 17.8125
+    tipoNota: 0
+  - tiempoAparicion: 18.28125
+    tipoNota: 1
+  - tiempoAparicion: 19.21875
+    tipoNota: 3
+  - tiempoAparicion: 19.6875
+    tipoNota: 0
+  - tiempoAparicion: 20.15625
+    tipoNota: 4
+  - tiempoAparicion: 20.625
+    tipoNota: 4
+  - tiempoAparicion: 21.09375
+    tipoNota: 0
+  - tiempoAparicion: 21.5625
+    tipoNota: 3
+  - tiempoAparicion: 22.96875
+    tipoNota: 0
+  - tiempoAparicion: 23.90625
+    tipoNota: 1
+  - tiempoAparicion: 24.375
+    tipoNota: 2
+  - tiempoAparicion: 25.78125
+    tipoNota: 3
+  - tiempoAparicion: 26.71875
+    tipoNota: 4
+  - tiempoAparicion: 27.65625
+    tipoNota: 4
+  - tiempoAparicion: 28.59375
+    tipoNota: 3
+  - tiempoAparicion: 29.53125
+    tipoNota: 1
+  - tiempoAparicion: 30
+    tipoNota: 2
+  - tiempoAparicion: 31.40625
+    tipoNota: 0
+  - tiempoAparicion: 32.34375
+    tipoNota: 0
+  - tiempoAparicion: 33.28125
+    tipoNota: 0
+  - tiempoAparicion: 33.75
+    tipoNota: 1
+  - tiempoAparicion: 34.6875
+    tipoNota: 1
+  - tiempoAparicion: 35.625
+    tipoNota: 2
+  - tiempoAparicion: 36.5625
+    tipoNota: 2
+  - tiempoAparicion: 37.96875
+    tipoNota: 0
+  - tiempoAparicion: 38.4375
+    tipoNota: 1
+  - tiempoAparicion: 39.375
+    tipoNota: 0
+  - tiempoAparicion: 39.84375
+    tipoNota: 2
+  - tiempoAparicion: 40.3125
+    tipoNota: 0
+  - tiempoAparicion: 41.25
+    tipoNota: 3
+  - tiempoAparicion: 41.71875
+    tipoNota: 0
+  - tiempoAparicion: 42.1875
+    tipoNota: 3
+  - tiempoAparicion: 43.125
+    tipoNota: 4
+  - tiempoAparicion: 43.59375
+    tipoNota: 0
+  - tiempoAparicion: 44.0625
+    tipoNota: 4
+  - tiempoAparicion: 45.46875
+    tipoNota: 1
+  - tiempoAparicion: 46.40625
+    tipoNota: 0
+  - tiempoAparicion: 47.8125
+    tipoNota: 0
+  - tiempoAparicion: 48.28125
+    tipoNota: 2
+  - tiempoAparicion: 49.21875
+    tipoNota: 3
+  - tiempoAparicion: 49.6875
+    tipoNota: 0
+  - tiempoAparicion: 50.15625
+    tipoNota: 4
+  - tiempoAparicion: 51.09375
+    tipoNota: 4
+  - tiempoAparicion: 51.5625
+    tipoNota: 0
+  - tiempoAparicion: 52.03125
+    tipoNota: 3
+  - tiempoAparicion: 54.84375
+    tipoNota: 4
+  - tiempoAparicion: 58.125
+    tipoNota: 0
+  - tiempoAparicion: 60.46875
+    tipoNota: 1
+  - tiempoAparicion: 60.9375
+    tipoNota: 0
+  - tiempoAparicion: 61.40625
+    tipoNota: 2
+  - tiempoAparicion: 62.34375
+    tipoNota: 2
+  - tiempoAparicion: 62.8125
+    tipoNota: 0
+  - tiempoAparicion: 64.21875
+    tipoNota: 3
+  - tiempoAparicion: 64.6875
+    tipoNota: 0
+  - tiempoAparicion: 65.625
+    tipoNota: 4
+  - tiempoAparicion: 66.09375
+    tipoNota: 0
+  - tiempoAparicion: 66.5625
+    tipoNota: 4
+  - tiempoAparicion: 67.96875
+    tipoNota: 0
+  - tiempoAparicion: 68.4375
+    tipoNota: 1
+  - tiempoAparicion: 69.84375
+    tipoNota: 2
+  - tiempoAparicion: 70.3125
+    tipoNota: 3
+  - tiempoAparicion: 71.25
+    tipoNota: 4
+  - tiempoAparicion: 72.65625
+    tipoNota: 0
+  - tiempoAparicion: 73.125
+    tipoNota: 1
+  - tiempoAparicion: 74.0625
+    tipoNota: 0
+  - tiempoAparicion: 75
+    tipoNota: 2
+  - tiempoAparicion: 76.40625
+    tipoNota: 3
+  - tiempoAparicion: 77.34375
+    tipoNota: 0
+  - tiempoAparicion: 78.28125
+    tipoNota: 0
+  - tiempoAparicion: 78.75
+    tipoNota: 4
+  - tiempoAparicion: 79.21875
+    tipoNota: 0
+  - tiempoAparicion: 81.09375
+    tipoNota: 1
+  - tiempoAparicion: 81.5625
+    tipoNota: 0
+  - tiempoAparicion: 82.03125
+    tipoNota: 0
+  - tiempoAparicion: 84.375
+    tipoNota: 1
+  - tiempoAparicion: 85.78125
+    tipoNota: 2
+  - tiempoAparicion: 86.71875
+    tipoNota: 3
+  - tiempoAparicion: 88.59375
+    tipoNota: 4
+  - tiempoAparicion: 89.53125
+    tipoNota: 0
+  - tiempoAparicion: 90
+    tipoNota: 1
+  - tiempoAparicion: 90.46875
+    tipoNota: 0
+  - tiempoAparicion: 91.40625
+    tipoNota: 2
+  - tiempoAparicion: 92.34375
+    tipoNota: 0
+  - tiempoAparicion: 93.75
+    tipoNota: 3
+  - tiempoAparicion: 94.21875
+    tipoNota: 0
+  - tiempoAparicion: 95.625
+    tipoNota: 0
+  - tiempoAparicion: 96.09375
+    tipoNota: 4
+  - tiempoAparicion: 97.96875
+    tipoNota: 0
+  - tiempoAparicion: 98.4375
+    tipoNota: 0
+  - tiempoAparicion: 99.84375
+    tipoNota: 0
+  - tiempoAparicion: 100.3125
+    tipoNota: 0
+  - tiempoAparicion: 100.78125
+    tipoNota: 2
+  - tiempoAparicion: 101.71875
+    tipoNota: 3
+  - tiempoAparicion: 102.1875
+    tipoNota: 3
+  - tiempoAparicion: 102.65625
+    tipoNota: 0
+  - tiempoAparicion: 103.59375
+    tipoNota: 4
+  - tiempoAparicion: 104.0625
+    tipoNota: 0
+  - tiempoAparicion: 105.46875
+    tipoNota: 1
+  - tiempoAparicion: 106.40625
+    tipoNota: 0
+  - tiempoAparicion: 106.875
+    tipoNota: 0
+  - tiempoAparicion: 107.8125
+    tipoNota: 0
+  - tiempoAparicion: 108.28125
+    tipoNota: 0
+  - tiempoAparicion: 109.21875
+    tipoNota: 2
+  - tiempoAparicion: 109.6875
+    tipoNota: 2
+  - tiempoAparicion: 110.15625
+    tipoNota: 0
+  - tiempoAparicion: 111.09375
+    tipoNota: 0
+  - tiempoAparicion: 112.03125
+    tipoNota: 3
+  - tiempoAparicion: 112.5
+    tipoNota: 0
+  - tiempoAparicion: 114.375
+    tipoNota: 1
+  - tiempoAparicion: 116.25
+    tipoNota: 0
+  - tiempoAparicion: 118.125
+    tipoNota: 2
+  - tiempoAparicion: 120
+    tipoNota: 0
+  - tiempoAparicion: 121.40625
+    tipoNota: 4
+  - tiempoAparicion: 121.875
+    tipoNota: 0
+  - tiempoAparicion: 122.34375
+    tipoNota: 0
+  - tiempoAparicion: 123.28125
+    tipoNota: 3
+  - tiempoAparicion: 123.75
+    tipoNota: 0
+  - tiempoAparicion: 124.21875
+    tipoNota: 0
+  - tiempoAparicion: 126.09375
+    tipoNota: 1
+  - tiempoAparicion: 126.5625
+    tipoNota: 0
+  - tiempoAparicion: 127.96875
+    tipoNota: 2
+  - tiempoAparicion: 128.4375
+    tipoNota: 1
+  - tiempoAparicion: 129.375
+    tipoNota: 4
+  - tiempoAparicion: 130.3125
+    tipoNota: 0
+  - tiempoAparicion: 131.25
+    tipoNota: 3
+  - tiempoAparicion: 131.71875
+    tipoNota: 3
+  - tiempoAparicion: 132.65625
+    tipoNota: 0
+  - tiempoAparicion: 133.125
+    tipoNota: 0
+  - tiempoAparicion: 133.59375
+    tipoNota: 0
+  - tiempoAparicion: 134.0625
+    tipoNota: 3
+  - tiempoAparicion: 135.46875
+    tipoNota: 1
+  - tiempoAparicion: 135.9375
+    tipoNota: 0
+  - tiempoAparicion: 136.40625
+    tipoNota: 2
+  - tiempoAparicion: 138.28125
+    tipoNota: 2
+  - tiempoAparicion: 139.21875
+    tipoNota: 1
+  - tiempoAparicion: 141.09375
+    tipoNota: 0
+  - tiempoAparicion: 142.96875
+    tipoNota: 0
+  - tiempoAparicion: 144.84375
+    tipoNota: 0
+  - tiempoAparicion: 146.71875
+    tipoNota: 0
+  - tiempoAparicion: 148.125
+    tipoNota: 0
+  - tiempoAparicion: 150
+    tipoNota: 0
+  - tiempoAparicion: 150.46875
+    tipoNota: 1
+  - tiempoAparicion: 150.9375
+    tipoNota: 0
+  - tiempoAparicion: 152.34375
+    tipoNota: 0
+  - tiempoAparicion: 152.8125
+    tipoNota: 0
+  - tiempoAparicion: 154.21875
+    tipoNota: 3
+  - tiempoAparicion: 154.6875
+    tipoNota: 3
+  - tiempoAparicion: 155.15625
+    tipoNota: 0
+  - tiempoAparicion: 156.09375
+    tipoNota: 4
+  - tiempoAparicion: 156.5625
+    tipoNota: 0
+  - tiempoAparicion: 157.96875
+    tipoNota: 1
+  - tiempoAparicion: 158.4375
+    tipoNota: 2
+  - tiempoAparicion: 159.84375
+    tipoNota: 2
+  - tiempoAparicion: 160.3125
+    tipoNota: 1
+  - tiempoAparicion: 161.71875
+    tipoNota: 0
+  - tiempoAparicion: 162.1875
+    tipoNota: 3
+  - tiempoAparicion: 163.59375
+    tipoNota: 0
+  - tiempoAparicion: 164.53125
+    tipoNota: 0
+  - tiempoAparicion: 166.40625
+    tipoNota: 1
+  - tiempoAparicion: 166.875
+    tipoNota: 0
+  - tiempoAparicion: 167.34375
+    tipoNota: 2
+  - tiempoAparicion: 168.28125
+    tipoNota: 2
+  - tiempoAparicion: 168.75
+    tipoNota: 0
+  - tiempoAparicion: 169.21875
+    tipoNota: 1
+  - tiempoAparicion: 170.625
+    tipoNota: 3
+  - tiempoAparicion: 171.09375
+    tipoNota: 0
+  - tiempoAparicion: 171.5625
+    tipoNota: 3
+  - tiempoAparicion: 172.96875
+    tipoNota: 0
+  - tiempoAparicion: 173.4375
+    tipoNota: 0
+  - tiempoAparicion: 174.84375
+    tipoNota: 3
+  - tiempoAparicion: 175.3125
+    tipoNota: 1
+  - tiempoAparicion: 176.71875
+    tipoNota: 1
+  - tiempoAparicion: 177.1875
+    tipoNota: 0
+  - tiempoAparicion: 178.59375
+    tipoNota: 4
+  - tiempoAparicion: 179.0625
+    tipoNota: 2
+  - tiempoAparicion: 180
+    tipoNota: 2
+  - tiempoAparicion: 180.46875
+    tipoNota: 0
+  - tiempoAparicion: 180.9375
+    tipoNota: 3
+  - tiempoAparicion: 184.21875
+    tipoNota: 0
   notasNormal: []
   notasDificil: []

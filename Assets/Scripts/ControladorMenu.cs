@@ -57,6 +57,21 @@ public class ControladorMenu : MonoBehaviour
     public AudioClip sonidoBoton;
     private AudioSource audioSourceMenu;
 
+    [Header("Sistema de Atención")]
+    public float anguloTolerancia = 45f; // Grados que puede girar la cabeza sin que salte el aviso
+    public float tiempoParaAviso = 3f; // Segundos seguidos que tiene que estar mirando fuera
+    private float tiempoMirandoFuera = 0f;
+    private float cooldownAviso = 0f;
+
+    [Header("Comportamiento del Menú")]
+    public float distanciaToleranciaMenu = 0.8f;
+    public float distanciaSaltoMenu = 1.5f;
+    public float velocidadSeguimientoMenu = 5f;
+    private bool menuEnMovimiento = false;
+
+    [Header("Ajustes de Sonido")]
+    public Slider sliderVolumen;
+
     public bool calibracionEnProceso = false;
 
     void Awake()
@@ -100,6 +115,8 @@ public class ControladorMenu : MonoBehaviour
         }
 
         if (panelMenu.activeSelf) ColocarMenuDelanteDeLaMirada();
+
+        ComprobarAtencionJugador();
     }
 
     public void ReproducirSonidoClic()
@@ -277,13 +294,49 @@ public class ControladorMenu : MonoBehaviour
         Vector3 targetPos = headPos + (lookDirection.normalized * 2.5f);
         targetPos.y = Mathf.Max(targetPos.y, headPos.y - 0.2f);
 
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.unscaledDeltaTime * 5f);
+        float distanciaAlObjetivo = Vector3.Distance(transform.position, targetPos);
 
-        Vector3 direccionHaciaCabeza = transform.position - headPos;
-        if (direccionHaciaCabeza != Vector3.zero)
+        if (distanciaAlObjetivo > distanciaSaltoMenu)
         {
-            Quaternion rotacionIdeal = Quaternion.LookRotation(direccionHaciaCabeza);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionIdeal, Time.unscaledDeltaTime * 5f);
+            transform.position = targetPos;
+            Vector3 direccionHaciaCabeza = transform.position - headPos;
+            if (direccionHaciaCabeza != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(direccionHaciaCabeza);
+            }
+            menuEnMovimiento = false;
+        }
+        else if (distanciaAlObjetivo > distanciaToleranciaMenu || menuEnMovimiento)
+        {
+            menuEnMovimiento = true;
+
+            transform.position = Vector3.Lerp(transform.position, targetPos, Time.unscaledDeltaTime * velocidadSeguimientoMenu);
+
+            Vector3 direccionHaciaCabeza = transform.position - headPos;
+            if (direccionHaciaCabeza != Vector3.zero)
+            {
+                Quaternion rotacionIdeal = Quaternion.LookRotation(direccionHaciaCabeza);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotacionIdeal, Time.unscaledDeltaTime * velocidadSeguimientoMenu);
+            }
+
+            if (distanciaAlObjetivo < 0.05f)
+            {
+                menuEnMovimiento = false;
+            }
+        }
+    }
+
+    public void CambiarVolumenGeneral()
+    {
+        if (sliderVolumen != null)
+        {
+            AudioListener.volume = sliderVolumen.value;
+        }
+
+        if (GestorDatosUsuario.Instancia != null && sliderVolumen != null)
+        {
+            GestorDatosUsuario.Instancia.configActual.volumen = sliderVolumen.value;
+            GestorDatosUsuario.Instancia.GuardarConfiguracion();
         }
     }
 
@@ -370,6 +423,44 @@ public class ControladorMenu : MonoBehaviour
         if(GestorRitmo.Instancia != null)
         {
             GestorRitmo.Instancia.CentrarPista();
+        }
+    }
+
+    void ComprobarAtencionJugador()
+    {
+        if (GestorRitmo.Instancia == null || (!GestorRitmo.Instancia.juegoEmpezado && !GestorRitmo.Instancia.enCuentaAtras))
+            return;
+
+        if (contenedorJuego == null || !contenedorJuego.gameObject.activeSelf)
+            return;
+
+        if (cooldownAviso > 0)
+        {
+            cooldownAviso -= Time.deltaTime;
+        }
+
+        Vector3 direccionHaciaPantalla = (contenedorJuego.position - headAnchor.position).normalized;
+
+        float anguloDesvio = Vector3.Angle(headAnchor.forward, direccionHaciaPantalla);
+
+        if (anguloDesvio > anguloTolerancia)
+        {
+            tiempoMirandoFuera += Time.deltaTime;
+
+            if (tiempoMirandoFuera >= tiempoParaAviso && cooldownAviso <= 0)
+            {
+                if (NotificacionFlotanteVR.Instancia != null)
+                {
+                    NotificacionFlotanteVR.Instancia.MostrarNotificacion("Puedes centrar la pantalla pulsando Y o B.", 4f);
+                }
+
+                tiempoMirandoFuera = 0f;
+                cooldownAviso = 10f;
+            }
+        }
+        else
+        {
+            tiempoMirandoFuera = 0f;
         }
     }
 }

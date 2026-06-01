@@ -15,9 +15,271 @@ MonoBehaviour:
   nombreCancion: Gutterlight Bloom
   artista: Suno AI
   archivoAudio: {fileID: 8300000, guid: e7263adae2f5cf545bd381101130eb54, type: 3}
-  bpm: 120
+  bpm: 104
   offsetInicial: 0
   desfasesExtra: []
-  notasFacil: []
+  notasFacil:
+  - tiempoAparicion: 9.807693
+    tipoNota: 0
+  - tiempoAparicion: 10.384615
+    tipoNota: 1
+  - tiempoAparicion: 10.961538
+    tipoNota: 0
+  - tiempoAparicion: 11.538462
+    tipoNota: 2
+  - tiempoAparicion: 12.115384
+    tipoNota: 0
+  - tiempoAparicion: 14.423077
+    tipoNota: 0
+  - tiempoAparicion: 15
+    tipoNota: 4
+  - tiempoAparicion: 15.576923
+    tipoNota: 0
+  - tiempoAparicion: 16.153847
+    tipoNota: 4
+  - tiempoAparicion: 16.730768
+    tipoNota: 0
+  - tiempoAparicion: 19.038462
+    tipoNota: 1
+  - tiempoAparicion: 19.615385
+    tipoNota: 0
+  - tiempoAparicion: 20.192308
+    tipoNota: 2
+  - tiempoAparicion: 21.346153
+    tipoNota: 2
+  - tiempoAparicion: 21.923077
+    tipoNota: 0
+  - tiempoAparicion: 22.5
+    tipoNota: 1
+  - tiempoAparicion: 23.653847
+    tipoNota: 3
+  - tiempoAparicion: 24.807692
+    tipoNota: 0
+  - tiempoAparicion: 25.961538
+    tipoNota: 3
+  - tiempoAparicion: 28.846153
+    tipoNota: 0
+  - tiempoAparicion: 29.423077
+    tipoNota: 1
+  - tiempoAparicion: 30.576923
+    tipoNota: 2
+  - tiempoAparicion: 31.730768
+    tipoNota: 4
+  - tiempoAparicion: 32.884617
+    tipoNota: 0
+  - tiempoAparicion: 34.03846
+    tipoNota: 1
+  - tiempoAparicion: 35.192307
+    tipoNota: 2
+  - tiempoAparicion: 37.5
+    tipoNota: 0
+  - tiempoAparicion: 38.653847
+    tipoNota: 3
+  - tiempoAparicion: 39.807693
+    tipoNota: 4
+  - tiempoAparicion: 42.692307
+    tipoNota: 0
+  - tiempoAparicion: 43.26923
+    tipoNota: 1
+  - tiempoAparicion: 44.423077
+    tipoNota: 2
+  - tiempoAparicion: 46.73077
+    tipoNota: 0
+  - tiempoAparicion: 47.884617
+    tipoNota: 4
+  - tiempoAparicion: 49.03846
+    tipoNota: 3
+  - tiempoAparicion: 51.346153
+    tipoNota: 0
+  - tiempoAparicion: 52.5
+    tipoNota: 1
+  - tiempoAparicion: 53.653847
+    tipoNota: 2
+  - tiempoAparicion: 55.961536
+    tipoNota: 0
+  - tiempoAparicion: 56.53846
+    tipoNota: 1
+  - tiempoAparicion: 57.115383
+    tipoNota: 0
+  - tiempoAparicion: 57.692307
+    tipoNota: 2
+  - tiempoAparicion: 58.26923
+    tipoNota: 0
+  - tiempoAparicion: 60.576923
+    tipoNota: 0
+  - tiempoAparicion: 61.153847
+    tipoNota: 4
+  - tiempoAparicion: 61.73077
+    tipoNota: 0
+  - tiempoAparicion: 62.884613
+    tipoNota: 4
+  - tiempoAparicion: 65.19231
+    tipoNota: 0
+  - tiempoAparicion: 66.34615
+    tipoNota: 1
+  - tiempoAparicion: 67.5
+    tipoNota: 0
+  - tiempoAparicion: 68.65385
+    tipoNota: 2
+  - tiempoAparicion: 69.80769
+    tipoNota: 0
+  - tiempoAparicion: 70.96154
+    tipoNota: 1
+  - tiempoAparicion: 72.11539
+    tipoNota: 0
+  - tiempoAparicion: 73.26923
+    tipoNota: 2
+  - tiempoAparicion: 74.42307
+    tipoNota: 0
+  - tiempoAparicion: 75.57692
+    tipoNota: 3
+  - tiempoAparicion: 76.73077
+    tipoNota: 0
+  - tiempoAparicion: 77.88461
+    tipoNota: 4
+  - tiempoAparicion: 79.03846
+    tipoNota: 0
+  - tiempoAparicion: 80.19231
+    tipoNota: 3
+  - tiempoAparicion: 81.34615
+    tipoNota: 4
+  - tiempoAparicion: 83.65385
+    tipoNota: 0
+  - tiempoAparicion: 84.80769
+    tipoNota: 1
+  - tiempoAparicion: 85.96154
+    tipoNota: 2
+  - tiempoAparicion: 88.26923
+    tipoNota: 0
+  - tiempoAparicion: 89.42307
+    tipoNota: 3
+  - tiempoAparicion: 90.57692
+    tipoNota: 4
+  - tiempoAparicion: 92.88461
+    tipoNota: 3
+  - tiempoAparicion: 94.03846
+    tipoNota: 0
+  - tiempoAparicion: 95.19231
+    tipoNota: 4
+  - tiempoAparicion: 97.5
+    tipoNota: 4
+  - tiempoAparicion: 98.65385
+    tipoNota: 0
+  - tiempoAparicion: 99.80769
+    tipoNota: 3
+  - tiempoAparicion: 102.11539
+    tipoNota: 0
+  - tiempoAparicion: 102.69231
+    tipoNota: 1
+  - tiempoAparicion: 103.26923
+    tipoNota: 0
+  - tiempoAparicion: 103.84615
+    tipoNota: 2
+  - tiempoAparicion: 104.42307
+    tipoNota: 0
+  - tiempoAparicion: 106.73077
+    tipoNota: 0
+  - tiempoAparicion: 107.30769
+    tipoNota: 3
+  - tiempoAparicion: 107.88461
+    tipoNota: 0
+  - tiempoAparicion: 109.03846
+    tipoNota: 3
+  - tiempoAparicion: 111.34615
+    tipoNota: 0
+  - tiempoAparicion: 111.92307
+    tipoNota: 4
+  - tiempoAparicion: 112.5
+    tipoNota: 0
+  - tiempoAparicion: 113.65385
+    tipoNota: 4
+  - tiempoAparicion: 115.96154
+    tipoNota: 1
+  - tiempoAparicion: 117.11539
+    tipoNota: 2
+  - tiempoAparicion: 118.269226
+    tipoNota: 0
+  - tiempoAparicion: 121.15385
+    tipoNota: 0
+  - tiempoAparicion: 122.30769
+    tipoNota: 4
+  - tiempoAparicion: 123.46154
+    tipoNota: 0
+  - tiempoAparicion: 125.19231
+    tipoNota: 0
+  - tiempoAparicion: 126.34615
+    tipoNota: 1
+  - tiempoAparicion: 127.5
+    tipoNota: 0
+  - tiempoAparicion: 129.8077
+    tipoNota: 0
+  - tiempoAparicion: 130.96153
+    tipoNota: 2
+  - tiempoAparicion: 132.11539
+    tipoNota: 0
+  - tiempoAparicion: 134.42308
+    tipoNota: 0
+  - tiempoAparicion: 135.57692
+    tipoNota: 4
+  - tiempoAparicion: 136.73077
+    tipoNota: 0
+  - tiempoAparicion: 139.03847
+    tipoNota: 0
+  - tiempoAparicion: 140.1923
+    tipoNota: 3
+  - tiempoAparicion: 141.34615
+    tipoNota: 0
+  - tiempoAparicion: 143.65384
+    tipoNota: 0
+  - tiempoAparicion: 144.8077
+    tipoNota: 4
+  - tiempoAparicion: 145.96153
+    tipoNota: 3
+  - tiempoAparicion: 148.26923
+    tipoNota: 0
+  - tiempoAparicion: 149.42308
+    tipoNota: 4
+  - tiempoAparicion: 150.57692
+    tipoNota: 3
+  - tiempoAparicion: 152.88461
+    tipoNota: 0
+  - tiempoAparicion: 154.03847
+    tipoNota: 4
+  - tiempoAparicion: 155.1923
+    tipoNota: 3
+  - tiempoAparicion: 157.5
+    tipoNota: 0
+  - tiempoAparicion: 158.07692
+    tipoNota: 1
+  - tiempoAparicion: 158.65384
+    tipoNota: 0
+  - tiempoAparicion: 159.23077
+    tipoNota: 2
+  - tiempoAparicion: 159.8077
+    tipoNota: 0
+  - tiempoAparicion: 162.11539
+    tipoNota: 0
+  - tiempoAparicion: 162.6923
+    tipoNota: 1
+  - tiempoAparicion: 163.26923
+    tipoNota: 2
+  - tiempoAparicion: 163.84615
+    tipoNota: 1
+  - tiempoAparicion: 164.42308
+    tipoNota: 2
+  - tiempoAparicion: 166.73077
+    tipoNota: 4
+  - tiempoAparicion: 167.88461
+    tipoNota: 0
+  - tiempoAparicion: 169.03847
+    tipoNota: 3
+  - tiempoAparicion: 171.34615
+    tipoNota: 0
+  - tiempoAparicion: 172.5
+    tipoNota: 1
+  - tiempoAparicion: 173.65384
+    tipoNota: 2
+  - tiempoAparicion: 178.84615
+    tipoNota: 0
   notasNormal: []
   notasDificil: []

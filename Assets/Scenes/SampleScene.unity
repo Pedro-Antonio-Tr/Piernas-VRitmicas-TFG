@@ -15291,6 +15291,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BotonUI_ReanudarJuego
       objectReference: {fileID: 0}
+    - target: {fileID: 866259537309849807, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_text
+      value: Ajustes
+      objectReference: {fileID: 0}
+    - target: {fileID: 943525439087016000, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 943525439087016000, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1462041616824789140, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 1612412095757766051, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15322,6 +15338,18 @@ PrefabInstance:
     - target: {fileID: 1612412095757766051, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_SizeDelta.y
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612412095757766051, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612412095757766051, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612412095757766051, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.006
       objectReference: {fileID: 0}
     - target: {fileID: 1612412095757766051, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15383,6 +15411,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2138133772006100705, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_text
+      value: Ajustes
+      objectReference: {fileID: 0}
     - target: {fileID: 2143659857830145540, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BotonUI_VolverAlMenuPrincipal
@@ -15390,6 +15422,14 @@ PrefabInstance:
     - target: {fileID: 2143659857830145540, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ControladorMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179143117842359156, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179143117842359156, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 2471541497982953789, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -15418,6 +15458,12 @@ PrefabInstance:
     - target: {fileID: 3147390085123500667, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_text
       value: "Iniciar calibraci\xF3n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258181082816774275, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_text
+      value: 'Ajustes
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3332758033719189886, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -15458,6 +15504,14 @@ PrefabInstance:
     - target: {fileID: 4997861894845869401, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_text
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001793513513475303, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001793513513475303, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 6290520801084784189, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_Name
@@ -15557,7 +15611,7 @@ PrefabInstance:
       objectReference: {fileID: 2015848087}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: catalogoCanciones.Array.size
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: 'catalogoCanciones.Array.data[0]'
@@ -15571,6 +15625,18 @@ PrefabInstance:
       propertyPath: 'catalogoCanciones.Array.data[2]'
       value: 
       objectReference: {fileID: 11400000, guid: 7fc6ec07c35a4fa43a45d8af47f90273, type: 2}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: 'catalogoCanciones.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e380fb5999dd9f4d8e1efb03bd8f111, type: 2}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: 'catalogoCanciones.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c72bca1b8b201c744b767b0edb5bc942, type: 2}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: 'catalogoCanciones.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 095d8173ca3aaf942976660534cbfe79, type: 2}
     - target: {fileID: 8678145602455131620, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: m_SizeDelta.x
       value: 200
