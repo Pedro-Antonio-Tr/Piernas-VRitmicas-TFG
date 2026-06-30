@@ -9602,6 +9602,63 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1101393466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1101393468}
+  - component: {fileID: 1101393467}
+  m_Layer: 0
+  m_Name: MonitorClinico
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1101393467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101393466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12a09165cb659244ab70800886b61052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonitorClinico
+  dificultadActual: 0
+  headAnchor: {fileID: 2056752266}
+  mandoDerecho: {fileID: 645021165}
+  indiceFatiga: 0
+  maxExtensionDerX: 0
+  maxExtensionIzqX: 0
+  maxExtensionArribaY: 0
+  maxExtensionAbajoY: 0
+  golpesPerfectos: 0
+  golpesMedios: 0
+  fallos: 0
+  frecuenciaRegistro: 0.1
+  umbralMovimientoBrusco: 3.5
+--- !u!4 &1101393468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101393466}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.04198, y: 1.4755, z: 2.497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105235382
 GameObject:
   m_ObjectHideFlags: 0
@@ -15570,6 +15627,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1010962396}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: imgPierna_Abajo
+      value: 
+      objectReference: {fileID: 21300000, guid: 37318bed01273e44db02a649384c8557, type: 3}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: imgPierna_Arriba
+      value: 
+      objectReference: {fileID: 21300000, guid: f1797cf4521a9b448b28f655505cb566, type: 3}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: imgPierna_Reposo
+      value: 
+      objectReference: {fileID: 21300000, guid: 631d7f5e08124834db4d274e4a972408, type: 3}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: textoNivelNombre
       value: 
       objectReference: {fileID: 2049821791}
@@ -15598,6 +15667,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: imgPierna_Derecha
+      value: 
+      objectReference: {fileID: 21300000, guid: 08ceab87f1a99924d8ff06634c70c60f, type: 3}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: textoNivelArtista
       value: 
       objectReference: {fileID: 536255643}
@@ -15605,6 +15678,10 @@ PrefabInstance:
       propertyPath: textoNivelDuracion
       value: 
       objectReference: {fileID: 670888196}
+    - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
+      propertyPath: imgPierna_Izquierda
+      value: 
+      objectReference: {fileID: 21300000, guid: b086e5cfa80fd7f429a2bf053f94bf08, type: 3}
     - target: {fileID: 7980659106525077569, guid: 1454f59c1046f06489fc2d2a3acb8f73, type: 3}
       propertyPath: botonCalibrarBienvenida
       value: 
@@ -16566,6 +16643,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1305738720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2139767130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139767132}
+  - component: {fileID: 2139767131}
+  m_Layer: 0
+  m_Name: GestorDatosUsuario
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2139767131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139767130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d72838e8745d2747b8d3e53334abecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GestorDatosUsuario
+  idUsuario: Invitado
+  configActual:
+    volumen: 1
+    calibracionPierna:
+      reposo:
+        posicion: {x: 0.056094535, y: 0.6282438, z: 0.052570682}
+        rotacion: {x: 0.6021557, y: -0.50077033, z: 0.5359849, w: -0.31521067}
+      izquierda:
+        posicion: {x: -0.041846227, y: 0.6106699, z: 0.004304873}
+        rotacion: {x: 0.67600447, y: -0.28357196, z: 0.5125648, w: -0.4470819}
+      derecha:
+        posicion: {x: 0.15625353, y: 0.5934007, z: 0.102907114}
+        rotacion: {x: 0.4704399, y: -0.72993875, z: 0.43939427, w: -0.22980061}
+      extendida:
+        posicion: {x: 0.03641978, y: 0.5495352, z: 0.13157198}
+        rotacion: {x: -0.5198755, y: -0.6096248, z: 0.34851047, w: -0.48644364}
+      levantada:
+        posicion: {x: 0.11424533, y: 0.68072116, z: -0.048261236}
+        rotacion: {x: 0.6188517, y: -0.44458455, z: 0.6421488, w: -0.08373743}
+--- !u!4 &2139767132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139767130}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.04198, y: 1.4755, z: 2.497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141529161
 GameObject:
   m_ObjectHideFlags: 0
@@ -16610,3 +16750,5 @@ SceneRoots:
   - {fileID: 736346865}
   - {fileID: 1993589819}
   - {fileID: 2015848085}
+  - {fileID: 2139767132}
+  - {fileID: 1101393468}

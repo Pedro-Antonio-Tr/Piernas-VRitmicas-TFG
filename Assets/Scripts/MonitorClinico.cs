@@ -38,6 +38,7 @@ public class MonitorClinico : MonoBehaviour
 
     private Quaternion rotacionAnteriorDer;
     private string ultimoEventoRegistrado = "NORMAL";
+    private string idSesionActual = "";
 
     void Awake()
     {
@@ -83,8 +84,8 @@ public class MonitorClinico : MonoBehaviour
     public void IniciarTelemetria(string nombreNivel)
     {
         ReiniciarMetricas();
-        string fechaHora = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string nombreArchivo = $"TelemetriaPierna_{GestorDatosUsuario.Instancia.idUsuario}_{nombreNivel}_{fechaHora}.csv";
+        idSesionActual = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string nombreArchivo = $"TelemetriaPierna_{GestorDatosUsuario.Instancia.idUsuario}_{nombreNivel}_{idSesionActual}.csv";
         string ruta = Path.Combine(GestorDatosUsuario.Instancia.RutaTracking, nombreArchivo);
 
         try
@@ -122,6 +123,7 @@ public class MonitorClinico : MonoBehaviour
         }
 
         GestorDatosUsuario.Instancia.GuardarPartidaRitmoCSV(
+            idSesionActual,
             cancion,
             dificultadActual.ToString(),
             resultado,

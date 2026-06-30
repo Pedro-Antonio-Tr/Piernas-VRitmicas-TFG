@@ -69,7 +69,7 @@ public class GestorRitmo : MonoBehaviour
     [Header("Estado")]
     public bool juegoEmpezado = false;
     public bool enCuentaAtras = false;
-    private bool esModoTutorial = false;
+    private bool esPartidaNormal = false;
 
     private Coroutine bucleJuego;
     private int puntuacionTotal = 0;
@@ -80,6 +80,7 @@ public class GestorRitmo : MonoBehaviour
     private float vidaActual;
     private float intensidadObjetivoLuz = 0f;
     private float tiempoInicioPartida;
+    private bool finalizandoPartida = false;
 
     void Awake()
     {
@@ -101,26 +102,27 @@ public class GestorRitmo : MonoBehaviour
             if (luzFondo.intensity == intensidadObjetivoLuz) intensidadObjetivoLuz = 0f;
         }
 
-        if (juegoEmpezado && esModoTutorial && !reproductorMusica.isPlaying && !enCuentaAtras && Time.timeScale > 0)
+        if (juegoEmpezado && esPartidaNormal && !reproductorMusica.isPlaying && !enCuentaAtras && Time.timeScale > 0 && !finalizandoPartida)
         {
+            finalizandoPartida = true;
             StartCoroutine(VictoriaNivel());
         }
     }
 
     public void EmpezarPruebaAleatoria()
     {
-        esModoTutorial = false;
+        esPartidaNormal = false;
         IniciarPartidaComun();
     }
 
-    public void EmpezarTutorial()
+    public void EmpezarPartida()
     {
         if (cancionActual == null)
         {
             Debug.LogError("¡No has asignado el archivo DatosCancionRitmo en el Gestor!");
             return;
         }
-        esModoTutorial = true;
+        esPartidaNormal = true;
         reproductorMusica.clip = cancionActual.archivoAudio;
         IniciarPartidaComun();
     }
@@ -131,6 +133,7 @@ public class GestorRitmo : MonoBehaviour
         InicializarEstadisticas();
         LimpiarPista();
         juegoEmpezado = true;
+        finalizandoPartida = false;
 
         tiempoInicioPartida = Time.time;
         if (MonitorClinico.Instancia != null && cancionActual != null)
@@ -154,7 +157,7 @@ public class GestorRitmo : MonoBehaviour
     public void ReiniciarNivelActual()
     {
         DetenerTodo();
-        if (esModoTutorial) EmpezarTutorial();
+        if (esPartidaNormal) EmpezarPartida();
         else EmpezarPruebaAleatoria();
     }
 
@@ -199,7 +202,7 @@ public class GestorRitmo : MonoBehaviour
         Time.timeScale = 1f;
         if (bucleJuego == null)
         {
-            if (esModoTutorial)
+            if (esPartidaNormal)
             {
                 reproductorMusica.Play();
                 bucleJuego = StartCoroutine(BucleLectorTutorial());
@@ -211,7 +214,7 @@ public class GestorRitmo : MonoBehaviour
         }
         else
         {
-            if (esModoTutorial)
+            if (esPartidaNormal)
             {
                 reproductorMusica.UnPause(); 
             }
@@ -368,6 +371,8 @@ public class GestorRitmo : MonoBehaviour
 
     private void DerrotaPorVida()
     {
+        if (finalizandoPartida) return;
+        finalizandoPartida = true;
         if (rellenoBarraVida != null) rellenoBarraVida.color = colorVidaMuerte;
         DetenerTodo();
 

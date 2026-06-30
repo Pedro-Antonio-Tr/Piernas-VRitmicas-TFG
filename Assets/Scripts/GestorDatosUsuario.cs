@@ -110,7 +110,7 @@ public class GestorDatosUsuario : MonoBehaviour
     }
 
 
-    public void GuardarPartidaRitmoCSV(string cancion, string dificultad, string resultado, int puntuacion, int rachaMax, float precision, float fatiga, float duracion)
+    public void GuardarPartidaRitmoCSV(string idSesion,string cancion, string dificultad, string resultado, int puntuacion, int rachaMax, float precision, float fatiga, float duracion)
     {
         string ruta = Path.Combine(RutaUsuario, "historial_ritmo.csv");
         bool existe = File.Exists(ruta);
@@ -119,9 +119,9 @@ public class GestorDatosUsuario : MonoBehaviour
         {
             if (!existe)
             {
-                sw.WriteLine("FechaHora;Cancion;Dificultad;Resultado;Puntuacion;RachaMaxima;Precision(%);IndiceFatiga;Duracion(s)");
+                sw.WriteLine("ID_Sesion;Cancion;Dificultad;Resultado;Puntuacion;RachaMaxima;Precision(%);IndiceFatiga;Duracion(s)");
             }
-            sw.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss};{cancion};{dificultad};{resultado};{puntuacion};{rachaMax};{precision:F2};{fatiga:F2};{duracion:F1}");
+            sw.WriteLine($"{idSesion};{cancion};{dificultad};{resultado};{puntuacion};{rachaMax};{precision:F2};{fatiga:F2};{duracion:F1}");
         }
     }
 

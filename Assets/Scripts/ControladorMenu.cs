@@ -53,6 +53,14 @@ public class ControladorMenu : MonoBehaviour
     public TextMeshProUGUI textoCuentaAtras;
     public TextMeshProUGUI textoInstrucciones;
 
+    [Header("Imágenes de Calibración")]
+    public Image imagenCalibracion;
+    public Sprite imgPierna_Reposo;
+    public Sprite imgPierna_Izquierda;
+    public Sprite imgPierna_Derecha;
+    public Sprite imgPierna_Abajo;
+    public Sprite imgPierna_Arriba;
+
     [Header("Sonidos de Interfaz")]
     public AudioClip sonidoBoton;
     private AudioSource audioSourceMenu;
@@ -68,6 +76,8 @@ public class ControladorMenu : MonoBehaviour
     public float distanciaSaltoMenu = 1.5f;
     public float velocidadSeguimientoMenu = 5f;
     private bool menuEnMovimiento = false;
+
+    private bool esPrimeraCalibracion = true;
 
     [Header("Ajustes de Sonido")]
     public Slider sliderVolumen;
@@ -158,7 +168,14 @@ public class ControladorMenu : MonoBehaviour
 
     public void BotonUI_VolverDesdeAjustes()
     {
-        AbrirPanel(panelNiveles);
+        if (GestorRitmo.Instancia != null && (GestorRitmo.Instancia.juegoEmpezado || GestorRitmo.Instancia.enCuentaAtras))
+        {
+            BotonUI_PausarJuego();
+        }
+        else
+        {
+            AbrirPanel(panelNiveles);
+        }
         ActualizarUINivelActual();
     }
 
@@ -213,7 +230,7 @@ public class ControladorMenu : MonoBehaviour
         CerrarMenuYMostrarPista();
 
         GestorRitmo.Instancia.cancionActual = catalogoCanciones[indiceCancionActual];
-        GestorRitmo.Instancia.EmpezarTutorial();
+        GestorRitmo.Instancia.EmpezarPartida();
     }
 
     public void BotonUI_PausarJuego()
@@ -402,19 +419,19 @@ public class ControladorMenu : MonoBehaviour
             yield break;
         }
 
-        yield return FaseContador("1/5: MANTÉN LAS PIERNAS EN REPOSO");
+        yield return FaseContador("1/5: MANTÉN LAS PIERNAS EN REPOSO", imgPierna_Reposo);
         calibracion.reposo = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("2/5: INCLINA LAS PIERNAS A LA IZQUIERDA");
+        yield return FaseContador("2/5: INCLINA LAS PIERNAS A LA IZQUIERDA", imgPierna_Izquierda);
         calibracion.izquierda = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("3/5: INCLINA LAS PIERNAS A LA DERECHA");
+        yield return FaseContador("3/5: INCLINA LAS PIERNAS A LA DERECHA", imgPierna_Derecha);
         calibracion.derecha = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("4/5: ESTIRA LAS PIERNAS (ABAJO)");
+        yield return FaseContador("4/5: ESTIRA LAS PIERNAS (ABAJO)", imgPierna_Abajo);
         calibracion.extendida = detector.ObtenerDatosHardware();
 
-        yield return FaseContador("5/5: LEVANTA LAS RODILLAS (ARRIBA)");
+        yield return FaseContador("5/5: LEVANTA LAS RODILLAS (ARRIBA)", imgPierna_Arriba);
         calibracion.levantada = detector.ObtenerDatosHardware();
 
         GestorDatosUsuario.Instancia.GuardarConfiguracion();
@@ -422,7 +439,8 @@ public class ControladorMenu : MonoBehaviour
         detector.calibracion = calibracion;
 
         textoInstrucciones.text = "¡CALIBRACIÓN GUARDADA!";
-        textoCuentaAtras.text = "OK";
+        textoCuentaAtras.text = "OK"; 
+        if (imagenCalibracion != null) imagenCalibracion.gameObject.SetActive(false);
         yield return new WaitForSecondsRealtime(2f);
 
         calibracionEnProceso = false;
@@ -431,15 +449,34 @@ public class ControladorMenu : MonoBehaviour
         {
             NotificacionFlotanteVR.Instancia.MostrarNotificacion("Si durante el juego sientes que la calibración no es adecuada, puedes volver a calibrar desde Ajustes.", 6f);
         }
+        if (esPrimeraCalibracion)
+        {
+            esPrimeraCalibracion = false;
 
-        AbrirPanel(panelNiveles);
-        ActualizarUINivelActual();
+            AbrirPanel(panelNiveles);
+        }
+        else
+        {
+            AbrirPanel(panelPausa);
+        }
+            ActualizarUINivelActual();
         ActualizarLaseres(true);
     }
 
-    private System.Collections.IEnumerator FaseContador(string instruccion)
+    private System.Collections.IEnumerator FaseContador(string instruccion, Sprite imagenAMostrar)
     {
         textoInstrucciones.text = instruccion;
+
+        if (imagenCalibracion != null && imagenAMostrar != null)
+        {
+            imagenCalibracion.gameObject.SetActive(true);
+            imagenCalibracion.sprite = imagenAMostrar;
+        }
+        else if (imagenCalibracion != null)
+        {
+            imagenCalibracion.gameObject.SetActive(false);
+        }
+
         for (int i = 5; i > 0; i--)
         {
             textoCuentaAtras.text = i.ToString();
